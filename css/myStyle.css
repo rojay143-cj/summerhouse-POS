@@ -1,0 +1,108 @@
+body {
+  background: url('../images/Background.png');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  font-family: Helvetica;
+  margin: 0px;
+  }
+
+/* HEADER START */
+.header-style{
+  background-color: rgba(20, 21, 55);
+}
+.btn-log, .checkOut{
+  text-decoration: none;
+  padding: 10px;
+  background-color: rgb(255, 128, 0);
+  box-shadow: 5px 6px 6px rgba(20, 21, 55);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: background-color 0.2s ease-in-out;
+}
+.nav-bar:hover{
+  color: #fff;
+  background-color: rgb(255, 128, 0);
+  border-radius: 50%;
+}#active{
+  background-color: rgb(255, 128, 0);
+  padding: 10px;
+  border-radius: 50%;
+}
+/* HEADER END */
+
+/* Sidebar START */
+
+.sidebar-left{
+  display: grid;
+  grid-template-columns: auto auto auto;
+}.sidebar-left img{
+  padding: 10px;
+  margin: 0;
+}.sidebar-left .food-container{
+  padding: 5px;
+  box-shadow: 5px 6px 6px rgba(20, 21, 55);
+  background-color: rgba(20, 21, 55);
+  color: #fff;
+  margin: 5px;
+}.food-wrap{
+  display: grid;
+  grid-template-rows: auto auto;
+  align-items: start;
+  padding: 12px;
+}
+#categoryId{
+  margin-top: 200px;
+  box-shadow: 5px 6px 6px rgba(20, 21, 55);
+  background-color: #fff;
+  font-size: 18px
+}
+.wrap{
+  background-color: #ffffffd8;
+  border: none;
+  box-shadow: 5px 6px 8px 6px rgba(20, 21, 55);
+  padding: 10px;
+}
+.sidebar-right div{
+  list-style: none;
+  display: grid;
+  grid-template-columns: auto auto;
+}
+/* Sidebar END */
+/* Check Out */
+.orderList{
+  border: 1px solid black;
+  padding: 10px;
+  width: 100%;
+}.modal-footer .payType, .placeText{
+  width: 100%;
+  height: 40px;
+  margin-top: 10px;
+  font-size: 17px;
+}.txtArea{
+  height: 120px;
+}.totalFoot{
+  display: grid;
+  grid-template-columns: 50% 50%;
+  border: 1px solid black;
+  margin: 15px;
+  padding: 15px;
+
+}.totalText{
+  text-align: left;
+  font-size: 17px;
+  color: green;
+}.total{
+  text-align: right;
+  font-size: 17px;
+  color: green;
+}
+
+/* Overview CSS */
+.table-wrap{
+  background-color: rgba(20, 21, 55);
+  color: #fff;
+}
