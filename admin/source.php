@@ -101,7 +101,7 @@
     }
             //YEARLY
         if(isset($_POST['yearly'])){
-            $yearly = date('y-m-d',strtotime('prevMonth'));
+            $yearly = date('y-m-d',-1);
             $sqlReports = "SELECT *,SUM(CASE WHEN payment_type = 'cash' THEN total_amount ELSE 0 END) as cash,
             SUM(CASE WHEN payment_type = 'gcash' THEN total_amount ELSE 0 END) as gcash,
             SUM(CASE WHEN payment_type = 'bank transfer' THEN total_amount ELSE 0 END) as bank,
