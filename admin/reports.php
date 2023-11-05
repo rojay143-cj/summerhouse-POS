@@ -49,15 +49,15 @@
     </header>
     <div class="container mt-5">
         <h4>Overview Dashboard</h4>
-        <form method="get" class="input-group mt-3">
+        <form method="POST" class="input-group mt-3">
             <div class="dropdown">
                 <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown">
                 <img src="../images/calendar.jpg" style="width: 30px;height: 30px;margin: 10px;" alt="calendar">SELECT DATE
                 </button>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" name="weekly" href="">Weekly</a></li>
-                    <li><a class="dropdown-item" href="">Monthly</a></li>
-                    <li><a class="dropdown-item" href="">Yearly</a></li>
+                    <li><button type="submit" class="dropdown-item text-center" name="weekly">Weekly</button></li>
+                    <li><button type="submit" class="dropdown-item text-center" name="monthly">Monthly</button></li>
+                    <li><button type="submit" class="dropdown-item text-center" name="yearly">Yearly</button></li>
                     <div id="datePicker" name="datePicker"></div>
                 </ul>
             </div>

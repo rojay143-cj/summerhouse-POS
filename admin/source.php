@@ -51,7 +51,11 @@
     }else{
         $Calendar = date('y-m-d',strtotime("yesterday"));
     }
-
+    
+    if(isset($_POST['weekly'])){
+        $weekly = date('y-m-d',strtotime('7 days ago'));
+        echo $weekly;
+    }
     $sqltotalOrder = "SELECT SUM(CASE WHEN payment_type = 'cash' THEN total_amount ELSE 0 END) as cash,
     SUM(CASE WHEN payment_type = 'gcash' THEN total_amount ELSE 0 END) as gcash,
     SUM(CASE WHEN payment_type = 'bank transfer' THEN total_amount ELSE 0 END) as bank,
@@ -65,4 +69,23 @@
     while($totOrder = $sqltotalOrder -> fetch_array()) {
         $totOrderData[] = $totOrder;
     }
+
+    /*
+    if(isset($_POST['weekly'])){
+        $weekly = date('y-m-d',strtotime('7 days ago'));
+        echo $weekly;
+        $sqltotalOrder = "SELECT SUM(CASE WHEN payment_type = 'cash' THEN total_amount ELSE 0 END) as cash,
+        SUM(CASE WHEN payment_type = 'gcash' THEN total_amount ELSE 0 END) as gcash,
+        SUM(CASE WHEN payment_type = 'bank transfer' THEN total_amount ELSE 0 END) as bank,
+        SUM(total_amount) as totalsales,
+        
+        products.product_name, sum(quantity) as totalorders,count(*) as totalsold FROM products INNER JOIN (SELECT product_id, count(*) as orders 
+        FROM order_details GROUP BY product_id ORDER BY orders DESC LIMIT 1) as bestseller ON products.product_id = bestseller.product_id
+        JOIN order_details
+        JOIN orders ON order_details.order_id = orders.order_id WHERE CAST(created_at as DATE) >= '$weekly'";
+        $sqltotalOrder = mysqli_query($conn, $sqltotalOrder);
+        while($totOrder = $sqltotalOrder -> fetch_array()) {
+            $totOrderData[] = $totOrder;
+        }
+    } */
 ?>
