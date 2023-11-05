@@ -15,10 +15,22 @@
     <script src="../summerJS/summer.js"></script>
     <script src="../api/Jquery.js"></script>
     <style>
+        @font-face {
+            font-family: "summerGotitalic";
+            src: url(../fonts/Gotham-UltraItalic.otf);
+        }@font-face{
+            font-family: "summerGotlight";
+            src: url(../fonts/Gotham-Bold.otf);
+        }
         .row{
             display: grid;
             grid-template-columns: 48% 48%;
             column-gap: 2vh;
+        }.totSales h4{
+            font-family: summerGotitalic;
+            font-size: 29px;
+        }.row h5{
+            font-family: summerGotlight;
         }
     </style>
 </head>
@@ -73,31 +85,40 @@
                     foreach ($reportData as $rowReport) {
 
                     }
+                    foreach ($todayData as $rowToday) {
+
+                    }
+                    foreach ($todayDatas as $rowTodays) {
+
+                    }
                 ?>
-                <h4 class="mt-3 p-3">Total Sales <br> <span class="text-primary">Php <?php echo number_format($rowReport['totalsales']); ?>.00</span></h4>
+                <div class="m-4 p-5 totSales">
+                    <h5 class="display-6">Total Sales</h5>
+                    <h4 class="text-primary">Php <?php echo number_format($rowReport['totalsales']); ?>.00</h5>
+                </div>
                 <hr>
-                <div>
+                <div class="row col text-center">
                     <h5>Cash sales</h5>
                     <h5>Php <?php echo number_format($rowReport['cash']); ?>.00</h5>
                 </div>
-                <div>
+                <div class="row col text-center">
                     <h5>Gcash sales</h5>
                     <h5>Php <?php echo number_format($rowReport['gcash']); ?>.00</h5>
                 </div>
-                <div>
+                <div class="row col text-center">
                     <h5>Online Bank sales</h5>
                     <h5>Php <?php echo number_format($rowReport['bank']); ?>.00</h5>
                 </div>
                 <hr>
-                <div>
+                <div class="row col text-center">
                     <h5>Total orders</h5>
                     <h5><?php echo $totOrder['totalorders']; ?></h5>
                 </div>
-                <div>
+                <div class="row col text-center">
                     <h5>Total products sold</h5>
                     <h5><?php echo $totOrder['totalsold']; ?></h5>
                 </div>
-                <div>
+                <div class="row col text-center">
                     <h5>Best Seller</h5>
                     <h5><?php echo $totOrder['product_name']; ?></h5>
                 </div>
@@ -106,11 +127,36 @@
             <div>
             <p class="text-center">Today</p>
             <div class="shadow p-3 mb-5 mt-2 bg-body rounded">
-                <h4 class="mt-3 p-3">Total Sales <br> <span class="text-primary">Php <?php  ?></span></h4>
+            <div class="m-4 p-5 totSales">
+                    <h5 class="display-6">Total Sales</h5>
+                    <h4 class="text-primary">Php <?php echo number_format($rowToday['totalsales']); ?>.00</h5>
+                </div>
                 <hr>
-                <h5 class="mt-3 p-3">Cash sales <br> <span>Gcash sales</span> <br> <span>Online Bank sales</span></h5>
+                <div class="row col text-center">
+                    <h5>Cash sales</h5>
+                    <h5>Php <?php echo number_format($rowToday['cash']); ?>.00</h5>
+                </div>
+                <div class="row col text-center">
+                    <h5>Gcash sales</h5>
+                    <h5>Php <?php echo number_format($rowToday['gcash']); ?>.00</h5>
+                </div>
+                <div class="row col text-center">
+                    <h5>Online Bank sales</h5>
+                    <h5>Php <?php echo number_format($rowToday['bank']); ?>.00</h5>
+                </div>
                 <hr>
-                <h5 class="mt-3 p-3">Total orders <br> <span>Total products sold</span> <br> <span>Best Seller</span></h5>
+                <div class="row col text-center">
+                    <h5>Total orders</h5>
+                    <h5><?php echo $rowTodays['totalorders']; ?></h5>
+                </div>
+                <div class="row col text-center">
+                    <h5>Total products sold</h5>
+                    <h5><?php echo $rowTodays['totalsold']; ?></h5>
+                </div>
+                <div class="row col text-center">
+                    <h5>Best Seller</h5>
+                    <h5><?php echo $rowTodays['product_name']; ?></h5>
+                </div>
             </div>
             </div>
         </div>
