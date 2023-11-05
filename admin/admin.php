@@ -104,7 +104,11 @@
                     <?php
                         }}
                     ?>
-                    <div>Total: ₱<?php echo number_format($grandTotal); ?></div>
+                    <div>
+                        <h4>Total: ₱<?php echo number_format($grandTotal);?> </h4>
+                        <br>
+                        <p> <?php echo $_SESSION['msg']; ?></p>
+                    </div>
                     <form method="post"><div><button name="checkOut" type="button" class="checkOut" data-bs-toggle="modal" data-bs-target="#myModal">Check Out</button></div></form>
                 </header>
         </div>
@@ -152,14 +156,13 @@
                                     <option value="Cash">Cash</option>
                                     <option value="GCash">GCash</option>
                                     <option value="Bank Transfer">Bank Transfer</option>
-                                    <option value="Card">Card</option>
                                 </select>
                                 <input type="text" class="placeText" name="txtCus" id="" placeholder="Customer Name" required>
                                 <input type="text" class="placeText" name="txtPayamount" id="" placeholder="Payment Amount" required>
                                 <textarea class="placeText txtArea" name="txtNote" placeholder="Notes(Optional)"></textarea>
                             </div>
                             <div class="modal-footer">
-                                <button type="submit" name="placeOrder" class="btn btn-success">PLACE ORDER</button>
+                                <button type="submit" name="placeOrder" id="placeOrder" class="btn btn-success">PLACE ORDER</button>
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CANCEL</button>
                             </div>
                             </form>
