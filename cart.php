@@ -41,9 +41,7 @@
             $grandtotal = $_SESSION['grandtotal'];
             $totalQuan = $_SESSION['totalQuan'];
             if($txtPayamount < $grandtotal){
-                echo '<script>
-                        alert("ERROR: Invalid Payment Amount");
-                    </script>';
+                $_SESSION['msg'] = "Sorry, Invalid payment amount!";
             }else{
                 $sqlOrders = "INSERT INTO orders (user_id, total_amount, customer_name, payment_type, amount_tendered, change_amount, notes) 
                 VALUES ((SELECT user_id FROM users WHERE user_id = $txtUserId),$grandtotal, '$txtCus', '$payType', '$txtPayamount',$txtPayamount - $grandtotal, '$txtNote')";
@@ -60,16 +58,16 @@
                     $sqlInsertOrder = mysqli_query($conn, $sqlInsertOrder);
                 }
                 $_SESSION['cart'] = array();
-                echo '<script>
-                        alert("Sucess: Orders has been Placed");
-                    </script>';
+                if(($_SESSION['msg'] == "Order Now!")){
+                    $_SESSION['msg'] = "Sucess: Order/s has been Placed";
+                }
             }
         }
         else{
-            echo '<script>
-                    alert("ERROR: Please Fill-up the form");
-                </script>';
+            $_SESSION['msg'] = "Order cancelled: Fill-up all the form";
         }
+    }else{
+        $_SESSION['msg'] = "Order Now!";
     }
     //END REGION ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 ?>
