@@ -70,20 +70,23 @@
                     foreach ($totOrderData as $totOrder) {
                         
                     }
+                    foreach ($reportData as $rowReport) {
+
+                    }
                 ?>
-                <h4 class="mt-3 p-3">Total Sales <br> <span class="text-primary">Php <?php echo number_format($totOrder['totalsales']); ?>.00</span></h4>
+                <h4 class="mt-3 p-3">Total Sales <br> <span class="text-primary">Php <?php echo number_format($rowReport['totalsales']); ?>.00</span></h4>
                 <hr>
                 <div>
                     <h5>Cash sales</h5>
-                    <h5>Php <?php echo number_format($totOrder['cash']); ?>.00</h5>
+                    <h5>Php <?php echo number_format($rowReport['cash']); ?>.00</h5>
                 </div>
                 <div>
                     <h5>Gcash sales</h5>
-                    <h5>Php <?php echo number_format($totOrder['gcash']); ?>.00</h5>
+                    <h5>Php <?php echo number_format($rowReport['gcash']); ?>.00</h5>
                 </div>
                 <div>
                     <h5>Online Bank sales</h5>
-                    <h5>Php <?php echo number_format($totOrder['bank']); ?>.00</h5>
+                    <h5>Php <?php echo number_format($rowReport['bank']); ?>.00</h5>
                 </div>
                 <hr>
                 <div>
