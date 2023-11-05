@@ -1,7 +1,6 @@
 <?php 
     include("../connection/connection.php");
     include("source.php");
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -56,7 +55,7 @@
                 <img src="../images/calendar.jpg" style="width: 30px;height: 30px;margin: 10px;" alt="calendar">SELECT DATE
                 </button>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="">Weekly</a></li>
+                    <li><a class="dropdown-item" name="weekly" href="">Weekly</a></li>
                     <li><a class="dropdown-item" href="">Monthly</a></li>
                     <li><a class="dropdown-item" href="">Yearly</a></li>
                     <div id="datePicker" name="datePicker"></div>
@@ -68,41 +67,36 @@
             <p class="text-center">Previous Day</p>
             <div class="shadow p-3 mb-5 mt-2 bg-body rounded">
                 <?php 
-                    foreach ($reportData as $rowReport) {
+                    foreach ($totOrderData as $totOrder) {
                         
                     }
                 ?>
-                <h4 class="mt-3 p-3">Total Sales <br> <span class="text-primary">Php <?php echo number_format($rowReport['totalsales']); ?>.00</span></h4>
+                <h4 class="mt-3 p-3">Total Sales <br> <span class="text-primary">Php <?php echo number_format($totOrder['totalsales']); ?>.00</span></h4>
                 <hr>
                 <div>
                     <h5>Cash sales</h5>
-                    <h5>Php <?php echo number_format($rowReport['cash']); ?>.00</h5>
+                    <h5>Php <?php echo number_format($totOrder['cash']); ?>.00</h5>
                 </div>
                 <div>
                     <h5>Gcash sales</h5>
-                    <h5>Php <?php echo number_format($rowReport['gcash']); ?>.00</h5>
+                    <h5>Php <?php echo number_format($totOrder['gcash']); ?>.00</h5>
                 </div>
                 <div>
                     <h5>Online Bank sales</h5>
-                    <h5>Php <?php echo number_format($rowReport['bank']); ?>.00</h5>
+                    <h5>Php <?php echo number_format($totOrder['bank']); ?>.00</h5>
                 </div>
                 <hr>
-                <?php  
-                    foreach($totOrderData as $totOrder){
-
-                    }
-                ?>
                 <div>
                     <h5>Total orders</h5>
-                    <h5><?php echo $totOrder['sum(quantity)']; ?></h5>
+                    <h5><?php echo $totOrder['totalorders']; ?></h5>
                 </div>
                 <div>
                     <h5>Total products sold</h5>
-                    <h5><?php echo $totOrder['ordercount']; ?></h5>
+                    <h5><?php echo $totOrder['totalsold']; ?></h5>
                 </div>
                 <div>
                     <h5>Best Seller</h5>
-                    <h5><?php echo $totOrder['bestseller']; ?></h5>
+                    <h5><?php echo $totOrder['product_name']; ?></h5>
                 </div>
             </div>
             </div>
@@ -120,7 +114,3 @@
     </div>
 </body>
 </html>
-
-<?php 
-    
-?>

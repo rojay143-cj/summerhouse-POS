@@ -45,25 +45,21 @@
         $reportData[] = $rowReport;
     }
 */
-    //Total Sales
+    //Previous Day Sales
     if(isset($_GET['date'])){
         $Calendar = $_GET['date'];
     }else{
-        $Calendar = date('Y-m-d',strtotime('yesterday'));
-    }
-    $sqlReports = "SELECT *,SUM(CASE WHEN payment_type = 'cash' THEN total_amount ELSE 0 END) as cash,
-                    SUM(CASE WHEN payment_type = 'gcash' THEN total_amount ELSE 0 END) as gcash,
-                    SUM(CASE WHEN payment_type = 'bank transfer' THEN total_amount ELSE 0 END) as bank,
-                    SUM(total_amount) as totalsales
-                    FROM orders WHERE CAST(created_at as DATE) = '$Calendar'";
-    $sqlReports = mysqli_query($conn, $sqlReports);
-    while ($rowReport = $sqlReports -> fetch_array()) {
-        $reportData[] = $rowReport;
+        $Calendar = date('y-m-d',strtotime("yesterday"));
     }
 
-    //Total orders
-    $sqltotalOrder = "SELECT count(*) as ordercount, sum(quantity) FROM order_details 
-    JOIN products ON order_details.product_id = products.product_id
+    $sqltotalOrder = "SELECT SUM(CASE WHEN payment_type = 'cash' THEN total_amount ELSE 0 END) as cash,
+    SUM(CASE WHEN payment_type = 'gcash' THEN total_amount ELSE 0 END) as gcash,
+    SUM(CASE WHEN payment_type = 'bank transfer' THEN total_amount ELSE 0 END) as bank,
+    SUM(total_amount) as totalsales,
+    
+    products.product_name, sum(quantity) as totalorders,count(*) as totalsold FROM products INNER JOIN (SELECT product_id, count(*) as orders 
+    FROM order_details GROUP BY product_id ORDER BY orders DESC LIMIT 1) as bestseller ON products.product_id = bestseller.product_id
+    JOIN order_details
     JOIN orders ON order_details.order_id = orders.order_id WHERE CAST(created_at as DATE) = '$Calendar'";
     $sqltotalOrder = mysqli_query($conn, $sqltotalOrder);
     while($totOrder = $sqltotalOrder -> fetch_array()) {

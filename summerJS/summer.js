@@ -7,6 +7,5 @@ $(document).ready(function(){
         var newURL = 'reports.php?date='+picker;
         window.location.replace(newURL);
         $(this).form.submit();
-
     })
 });
