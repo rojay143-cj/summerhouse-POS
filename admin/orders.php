@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Overview</title>
+    <title>ORDERS</title>
     <link rel="stylesheet" href="../css/summerStyle.css">
     <link rel="stylesheet" href="../api/datatable.css">
     <script src="../api/datatable.js"></script>
