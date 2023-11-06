@@ -1,6 +1,6 @@
 <?php
     session_start();
-    /* Orders.php Region */
+    /* products.php Region */
     if($_SESSION['txtUsername'] == ""){
         header("location: ../logout.php");
     }
@@ -13,12 +13,15 @@
         $getId = $_GET['id'];
         $sqlDelete = "DELETE FROM order_details WHERE product_id = $getId";
         $sqlDelete = mysqli_query( $conn, $sqlDelete);
+
     }
 ?>
 <?php
-    /* Products.php Region */
-    $sqlgetOrder = "SELECT * FROM order_details
-    JOIN products ON order_details.product_id = products.product_id
+    /* Orders.php Region */
+
+    $sqlgetOrder = "SELECT *, orders.created_at
+    FROM products
+    JOIN order_details ON products.product_id = order_details.product_id
     JOIN orders ON order_details.order_id = orders.order_id
     JOIN users ON orders.user_id = users.user_id";
     $orderResult = mysqli_query($conn, $sqlgetOrder);

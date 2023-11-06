@@ -54,8 +54,7 @@
                     <?php
                     if(isset($orderData)){
                         foreach($orderData as $rowOrder){
-                            $date = $rowOrder['created_at'];
-                        
+                            
                     ?>
                     <tr>
                         <td><?php echo $rowOrder['display_name']; ?></td>
@@ -65,7 +64,7 @@
                         <td><?php echo $rowOrder['quantity']; ?></td>
                         <td><?php echo $rowOrder['subtotal']; ?></td>
                         <td><?php echo $rowOrder['payment_type']; ?></td>
-                        <td><?php echo date('y-m-d h:m',strtotime($rowOrder['created_at'])); ?></td>
+                        <td><?php echo $rowOrder['created_at']; ?></td>
                         <td><form action="orders.php?id=<?php echo $rowOrder['product_id']; ?>" method="post"><button type="submit" class="btn btn-danger" name="btn-delete">Delete</button></form></td>
                     </tr>
                     <?php }} ?>
