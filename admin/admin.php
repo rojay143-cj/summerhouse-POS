@@ -10,7 +10,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Summerhouse Cafe</title>
-    <link rel="stylesheet" href="../css/myStyle.css">
+    <link rel="stylesheet" href="../css/myStyles.css">
     <link rel="stylesheet" href="../api/datatable.css">
     <script src="../api/datatable.js"></script>
     
@@ -18,7 +18,7 @@
 <body>
         <header class="p-3 header-style"">
             <div class="container">
-                <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start head-nav">
                     <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
                     <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"/></svg>
                     </a>
@@ -43,7 +43,7 @@
         <div class="container" id="order">
         <div class="row">
         <form action="<?php htmlspecialchars($_SERVER["PHP_SELF"]) ?>" method="POST" class="mt-5">
-                <select class="dropdown" name="categoryId" onchange="this.form.submit();">
+                <select class="dropdown" id="categoryId" name="categoryId" onchange="this.form.submit();">
                 <option value="" class="btn btn-secondary dropdown-toggle" style="background-color: rgb(255, 128, 0);">Choose Categories...</option>
                 <?php
                     foreach($categories as $category){
@@ -118,7 +118,7 @@
                 <div class="modal-dialog">
 
                     <!-- Modal content-->
-                    <div class="modal-content">
+                    <div class="modal-content modalMain">
                     <div class="modal-header">
                         <h4 class="modal-title" style="font-size: 20px">Order Confirmation</h4>
                     </div>
@@ -170,7 +170,5 @@
 
                 </div>
                 </div>
-
-    <script src="js/js.js"></script>
 </body>
 </html>

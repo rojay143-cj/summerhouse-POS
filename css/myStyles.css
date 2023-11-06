@@ -1,18 +1,29 @@
+@font-face {
+  font-family: "summerGotitalic";
+  src: url(../fonts/Gotham-UltraItalic.otf);
+}@font-face{
+  font-family: "summerGotlight";
+  src: url(../fonts/Gotham-Bold.otf);
+}@font-face{
+font-family: "Sunborn-sansone";
+src: url(../fonts/Sunborn-SansOne.otf);
+font-weight: bold;
+}
 body {
   background: url('../images/Background.png');
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
-  font-family: Helvetica;
   margin: 0px;
   }
-
 /* HEADER START */
 .header-style{
   background-color: rgba(20, 21, 55);
+  font-family: Sunborn-sansone;
 }
 .btn-log, .checkOut{
   text-decoration: none;
+  font-family: Sunborn-sansone;
   padding: 10px;
   background-color: rgb(255, 128, 0);
   box-shadow: 5px 6px 6px rgba(20, 21, 55);
@@ -20,7 +31,7 @@ body {
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 18px;
+  font-size: 12px;
   transition: background-color 0.2s ease-in-out;
 }
 .nav-bar:hover{
@@ -39,6 +50,8 @@ body {
 .sidebar-left{
   display: grid;
   grid-template-columns: auto auto auto;
+  font-family: summerGotlight;
+  font-size: 16px;
 }.sidebar-left img{
   padding: 10px;
   margin: 0;
@@ -55,16 +68,19 @@ body {
   padding: 12px;
 }
 #categoryId{
-  margin-top: 200px;
   box-shadow: 5px 6px 6px rgba(20, 21, 55);
   background-color: #fff;
-  font-size: 18px
+  font-size: 30px;
+  font-family: summerGotlight;
+  font-size: 16px;
 }
 .wrap{
   background-color: #ffffffd8;
   border: none;
   box-shadow: 5px 6px 8px 6px rgba(20, 21, 55);
   padding: 10px;
+  font-family: summerGotlight;
+  font-size: 16px;
 }
 .sidebar-right div{
   list-style: none;
@@ -105,4 +121,7 @@ body {
 .table-wrap{
   background-color: rgba(20, 21, 55);
   color: #fff;
+}.modalMain{
+  font-family: summerGotlight;
+  font-size: 16px;
 }
