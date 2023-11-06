@@ -5,9 +5,15 @@
   font-family: "summerGotlight";
   src: url(../fonts/Gotham-Bold.otf);
 }@font-face{
+  font-family: "gotham-ultra";
+  src: url(../fonts/Gotham-ThinItalic.otf);
+}@font-face{
 font-family: "Sunborn-sansone";
 src: url(../fonts/Sunborn-SansOne.otf);
 font-weight: bold;
+}@font-face{
+  font-family: "sunborn-script";
+  src: url(../fonts/Sunborn-Script.otf);
 }
 body {
   background: url('../images/Background.png');
@@ -110,6 +116,7 @@ body {
   grid-template-columns: auto auto;
 }
 /* Sidebar END */
+
 /* Check Out */
 .orderList{
   border: 1px solid black;
@@ -139,12 +146,19 @@ body {
   color: green;
 }
 
-/* Overview CSS */
+/* Overview CSS & reports */
 .table-wrap{
   background-color: #FFF2E4;
   color: rgba(20, 21, 55);
   font-family: summerGotlight;
+  border: 5px solid #fff;
 }.modalMain{
   font-family: summerGotlight;
   font-size: 16px;
+}.reports-container{
+  font-family: summerGotlight;
+  background-color: #FFF2E4;
+  border: 5px solid #fff;
+}.reportBox1{
+  border-radius: 50%;
 }

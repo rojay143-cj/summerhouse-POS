@@ -15,7 +15,24 @@
         $sqlDelete = mysqli_query( $conn, $sqlDelete);
 
     }
+
+    //products - get categories
+    $categorySql = "SELECT * FROM categories";
+    $categoryResults = mysqli_query($conn, $categorySql);
+    if($categoryResults -> num_rows > 0){
+        while($rows = $categoryResults -> fetch_array()){
+            $categories[] = $rows;
+        }
+    }
+    if(isset($_POST["addProd"])){
+        $prodName = $_POST["prodName"];
+        $prodPrice = $_POST["prodPrice"];
+        $prodCat = $_POST["prodCat"];
+        $sqlinsertProd = "INSERT INTO products (product_name, price, category_id) VALUES ('$prodName', '$prodPrice','$prodCat')";
+        $sqlinsertProd = mysqli_query( $conn, $sqlinsertProd);
+    }
 ?>
+
 <?php
     /* Orders.php Region */
 

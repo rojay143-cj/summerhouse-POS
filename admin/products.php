@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Summerhouse Cafe</title>
-    <link rel="stylesheet" href="../css/summerStyle.css">
+    <link rel="stylesheet" href="../css/summerStyles.css">
     <link rel="stylesheet" href="../api/datatable.css">
     <script src="../api/datatable.js"></script>
     <style>
@@ -71,26 +71,32 @@
                 </tbody>
             </table>
             </div>
-            <form id="addProd">
+            <form action="<?php htmlspecialchars($_SERVER["PHP_SELF"]) ?>" method="POST">
                 <div class="shadow p-3 mb-5 bg-body rounded">
                 <h4>Add Products</h4>
                 <div>
-                <select class="form-select form-select-lg">
-                    <option>Select Category</option>
+                <select class="form-select form-select-lg" name="prodCat">
+                    <option class="text-secondary">Select Category</option>
+                    <?php
+                        foreach($categories as $rows){
+                             
+                    ?>
+                    <option class="" value="<?php echo $rows['category_id']; ?>"><?php echo $rows['category_name']; ?></option>
+                    <?php } ?>
                 </select>
                 <div class="input-group mt-3">
                     <span class="input-group-text">Product Name</span>
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control"  name="prodName">
                 </div>
                 <div class="input-group mt-3">
                     <span class="input-group-text">Php</span>
-                    <input type="text" class="form-control" placeholder="Price">
+                    <input type="text" class="form-control" placeholder="Price"  name="prodPrice">
                 </div>
                 <div class="input-group mt-3">
                     <input class="form-control" type="file" id="formFileMultiple" multiple>
                 </div>
                 <div class="d-grid gap-2 mt-4">
-                    <button class="btn btn-primary" type="button">Add Products</button>
+                    <button class="btn btn-primary" type="submit" name="addProd">Add Products</button>
                 </div>
                 </div>
             </form>

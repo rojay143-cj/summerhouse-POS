@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ORDERS</title>
-    <link rel="stylesheet" href="../css/summerStyle.css">
+    <link rel="stylesheet" href="../css/summerStyles.css">
     <link rel="stylesheet" href="../api/datatable.css">
     <script src="../api/datatable.js"></script>
 </head>
@@ -36,6 +36,7 @@
     </header>
     <div class="container mt-5">
         <div class="row table-wrap pt-5">
+            <h1 class="text-center text-secondary">Transactions</h1>
             <table id="example" class="table table-striped" style="width:100%">
                 <thead>
                     <tr>

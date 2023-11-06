@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Summerhouse Cafe</title>
-    <link rel="stylesheet" href="../css/summerStyle.css">
+    <link rel="stylesheet" href="../css/summerStyles.css">
     <link rel="stylesheet" href="../api/datatable.css">
     <link rel="stylesheet" href="../api/fontAwesome.css">
     <script src="../api/datatable.js"></script>
@@ -56,8 +56,8 @@
                 </div>
             </div>
     </header>
-    <div class="container mt-5">
-        <h4>Overview Dashboard</h4>
+    <div class="container mt-5 reports-container">
+        <h4 class="mt-3 display-6">Overview Dashboard</h4>
         <form method="POST" class="input-group mt-3">
             <div class="dropdown">
                 <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown">
@@ -73,7 +73,7 @@
         </form>
         <div class="row mt-3">
             <div>
-            <p class="text-center">Previous Day</p>
+            <p class="text-center text-secondary">Previous Day</p>
             <div class="shadow p-3 mb-5 mt-2 bg-body rounded">
                 <?php 
                     foreach ($totOrderData as $totOrder) {
@@ -122,7 +122,7 @@
             </div>
             </div>
             <div>
-            <p class="text-center">Today</p>
+            <p class="text-center text-secondary">Today</p>
             <div class="shadow p-3 mb-5 mt-2 bg-body rounded">
             <div class="m-4 p-5 totSales">
                     <h5 class="display-6">Total Sales</h5>
