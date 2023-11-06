@@ -141,8 +141,9 @@ body {
 
 /* Overview CSS */
 .table-wrap{
-  background-color: rgba(20, 21, 55);
-  color: #fff;
+  background-color: #FFF2E4;
+  color: rgba(20, 21, 55);
+  font-family: summerGotlight;
 }.modalMain{
   font-family: summerGotlight;
   font-size: 16px;

@@ -54,15 +54,16 @@
                     <?php
                     if(isset($orderData)){
                         foreach($orderData as $rowOrder){
-                            
+                            //$date = date_create($rowOrder["created_at"],timezone_open("Asia/Bangkok"));
+                            //echo date_format($date,"y-m-d h:m:s")
                     ?>
                     <tr>
                         <td><?php echo $rowOrder['display_name']; ?></td>
                         <td><?php echo $rowOrder['customer_name']; ?></td>
                         <td><?php echo $rowOrder['product_name']; ?></td>
-                        <td><?php echo $rowOrder['price']; ?></td>
-                        <td><?php echo $rowOrder['quantity']; ?></td>
-                        <td><?php echo $rowOrder['subtotal']; ?></td>
+                        <td>₱<?php echo $rowOrder['price']; ?></td>
+                        <td><?php echo $rowOrder['quantity']; ?><span style="font-size: 11px;">qty</span></td>
+                        <td>₱<?php echo $rowOrder['subtotal']; ?></td>
                         <td><?php echo $rowOrder['payment_type']; ?></td>
                         <td><?php echo $rowOrder['created_at']; ?></td>
                         <td><form action="orders.php?id=<?php echo $rowOrder['product_id']; ?>" method="post"><button type="submit" class="btn btn-danger" name="btn-delete">Delete</button></form></td>
