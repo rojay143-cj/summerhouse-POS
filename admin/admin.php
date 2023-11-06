@@ -104,10 +104,10 @@
                     <?php
                         }}
                     ?>
-                    <div>
-                        <h4>Total: ₱<?php echo number_format($grandTotal);?> </h4>
-                        <br>
-                        <p> <?php echo $_SESSION['msg']; ?></p>
+                    <div>Total: ₱<?php echo number_format($grandTotal); ?>
+                    <br>
+                    <p><?php echo $_SESSION['msg']; ?></p>
+                    <br>
                     </div>
                     <form method="post"><div><button name="checkOut" type="button" class="checkOut" data-bs-toggle="modal" data-bs-target="#myModal">Check Out</button></div></form>
                 </header>

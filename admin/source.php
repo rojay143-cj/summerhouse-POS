@@ -120,7 +120,7 @@
         }
     }
 
-    $today = date("y-m-d",strtotime("tomorrow"));
+    $today = date("y-m-d",strtotime("today"));
     $sqlReports = "SELECT *,SUM(CASE WHEN payment_type = 'cash' THEN total_amount ELSE 0 END) as cash,
     SUM(CASE WHEN payment_type = 'gcash' THEN total_amount ELSE 0 END) as gcash,
     SUM(CASE WHEN payment_type = 'bank transfer' THEN total_amount ELSE 0 END) as bank,
