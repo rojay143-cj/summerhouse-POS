@@ -33,6 +33,14 @@ body {
   cursor: pointer;
   font-size: 12px;
   transition: background-color 0.2s ease-in-out;
+}#checkOut:hover{
+  background-color: green;
+  color: #fff;
+}.welcome{
+  margin-right: 5px;
+}
+.nav-bar{
+  margin-left: 5px;
 }
 .nav-bar:hover{
   color: #fff;
@@ -47,21 +55,33 @@ body {
 
 /* Sidebar START */
 
-.sidebar-left{
-  display: grid;
-  grid-template-columns: auto auto auto;
-  font-family: summerGotlight;
-  font-size: 16px;
-}.sidebar-left img{
-  padding: 10px;
-  margin: 0;
-}.sidebar-left .food-container{
-  padding: 5px;
-  box-shadow: 5px 6px 6px rgba(20, 21, 55);
-  background-color: rgba(20, 21, 55);
+  /* Countainer  START */
+  .side-left,.side-right{
+    background-color: #fff;
+}.rows{
+    display: grid;
+    grid-template-columns: 48% 48%;
+    column-gap: 2%;
+}
+  /* Countainer END */
+
+.side-left{
+    display: grid;
+    grid-template-columns: auto auto auto;
+    margin-right: -200px;
+    overflow-y: scroll;
+    height: 50%;
+    font-family: Sunborn-sansone;
+}.food-container{
+    box-shadow: 3px 4px 6px rgba(20, 21, 55);
+    margin-left: -5px;
+    text-align: center;
+}.food-container div button:hover{
+  background-color: green;
   color: #fff;
-  margin: 5px;
-}.food-wrap{
+  box-shadow: 3px 5px 7px white;
+}
+.food-wrap{
   display: grid;
   grid-template-rows: auto auto;
   align-items: start;
@@ -74,7 +94,9 @@ body {
   font-family: summerGotlight;
   font-size: 16px;
 }
-.wrap{
+.sidebar-right{
+  margin-left: 200px;
+}.wrap{
   background-color: #ffffffd8;
   border: none;
   box-shadow: 5px 6px 8px 6px rgba(20, 21, 55);
