@@ -11,12 +11,16 @@
     }
     if(isset($_POST["btn-delete"])){
         $getId = $_GET['id'];
-        $sqlDelete = "DELETE FROM order_details WHERE product_id = $getId";
-        $sqlDelete = mysqli_query( $conn, $sqlDelete);
+        //orders.php delete
+        $sqlorderDelete = "DELETE FROM order_details WHERE product_id = $getId";
+        $sqlorderDelete = mysqli_query( $conn, $sqlorderDelete);
+        //products delete
+        $sqlproductsDelete = "DELETE FROM products WHERE product_id = $getId";
+        $sqlproductsDelete = mysqli_query( $conn, $sqlproductsDelete);
 
     }
 
-    //products - get categories
+    //products.php - get categories
     $categorySql = "SELECT * FROM categories";
     $categoryResults = mysqli_query($conn, $categorySql);
     if($categoryResults -> num_rows > 0){
@@ -28,8 +32,18 @@
         $prodName = $_POST["prodName"];
         $prodPrice = $_POST["prodPrice"];
         $prodCat = $_POST["prodCat"];
-        $sqlinsertProd = "INSERT INTO products (product_name, price, category_id) VALUES ('$prodName', '$prodPrice','$prodCat')";
-        $sqlinsertProd = mysqli_query( $conn, $sqlinsertProd);
+        $sqlprodCheck = "SELECT * FROM products WHERE product_name = '$prodName'";
+        $sqlprodCheck = mysqli_query($conn, $sqlprodCheck);
+        if(mysqli_num_rows($sqlprodCheck) === 0){
+            $sqlinsertProd = "INSERT INTO products (product_name, price, category_id) VALUES ('$prodName', '$prodPrice','$prodCat')";
+            $sqlinsertProd = mysqli_query( $conn, $sqlinsertProd);
+        }else{
+            echo "<script>
+                document.addEventListener('DOMContentLoaded', function() {
+                alert('Invalid Product name!');
+             });
+            </script>";
+        }
     }
 ?>
 
@@ -160,4 +174,35 @@
     while($rowTodays = $sqltotalOrder -> fetch_array()) {
     $todayDatas[] = $rowTodays;
 }
+?>
+
+<?php 
+    //Categories.php Region
+
+    if(isset($_POST["addCat"])){
+        $catName = $_POST['catName'];
+        $sqlcatCheck = "SELECT * FROM categories WHERE category_name = '$catName'";
+        $sqlcatCheck = mysqli_query($conn, $sqlcatCheck);
+        if(mysqli_num_rows($sqlcatCheck) === 0){
+            $sqlCat = "INSERT INTO categories (category_name) VALUES ('$catName')";
+            $sqlCat = mysqli_query($conn, $sqlCat);
+            header("location: categories.php");
+        }else{
+            echo "<script>
+                document.addEventListener('DOMContentLoaded', function() {
+                alert('Invalid Category name!');
+             });
+            </script>";
+        }
+    }if(isset($_POST["deleteCat"])){
+        $getId = $_GET['id'];
+        $sqlcatDel = "DELETE FROM categories WHERE category_id = $getId";
+        $sqlcatDel = mysqli_query($conn, $sqlcatDel);
+        header("location: categories.php");
+    }if(isset($_POST["catSave"])){
+        $getId = $_GET['id'];
+        $modalcatName = $_POST["modalcatName"];
+        $sqlCat = "UPDATE categories SET category_name = '$modalcatName' WHERE category_id = $getId";
+        $sqlCat = mysqli_query($conn, $sqlCat);
+    }
 ?>
