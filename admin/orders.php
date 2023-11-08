@@ -1,6 +1,6 @@
 <?php 
-    include("../connection/connection.php");
-    include("source.php");
+    require("../connection/connection.php");
+    require("source.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -67,7 +67,8 @@
                         <td>₱<?php echo $rowOrder['subtotal']; ?></td>
                         <td><?php echo $rowOrder['payment_type']; ?></td>
                         <td><?php echo $rowOrder['created_at']; ?></td>
-                        <td><form action="orders.php?id=<?php echo $rowOrder['product_id']; ?>" method="post"><button type="submit" class="btn btn-danger" name="btn-delete">Delete</button></form></td>
+                        <td><form action="orders.php?orderId=<?php echo $rowOrder['product_id']; ?>" method="post">
+                        <button type="submit" class="btn btn-danger" name="orderDelete">Delete</button></form></td>
                     </tr>
                     <?php }} ?>
                 </tbody>

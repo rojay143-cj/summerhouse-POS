@@ -1,6 +1,6 @@
 <?php 
-    include("../connection/connection.php");
-    include("source.php");
+    require("../connection/connection.php");
+    require("source.php");
 
 ?>
 <!DOCTYPE html>
@@ -12,8 +12,6 @@
     <link rel="stylesheet" href="../css/summerStyles.css">
     <link rel="stylesheet" href="../api/datatable.css">
     <script src="../api/datatable.js"></script>
-    <script src="../api/Jquery.js"></script>
-    <script src="../summerJS/summer.js"></script>
     <style>
         #container{
             display: grid;
@@ -86,6 +84,7 @@
                 </div>
                 </div>
             </form>
+            <p><?php echo $_SESSION['catMessage']; ?></p>
         </div>
         <?php
         if(isset($_POST['catEdit']))
@@ -110,7 +109,7 @@
                             <div class="modal-body">
                             <div class="input-group mt-3">
                                 <span class="input-group-text">Category Name</span>
-                                <input type="text" name="modalcatName" class="form-control">
+                                <input type="text" name="modalcatName" class="form-control" required>
                             </div>
                     <div class="modal-footer mt-3">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

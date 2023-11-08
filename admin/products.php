@@ -1,6 +1,6 @@
 <?php 
-    include("../connection/connection.php");
-    include("source.php");
+    require("../connection/connection.php");
+    require("source.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -64,7 +64,8 @@
                         <td width="5%"><?php echo $rowprod['product_name']; ?></td>
                         <td><?php echo $rowprod['price']; ?></td>
                         <td><?php echo $rowprod['category_name']; ?></td>
-                        <td><form action="products.php?id= <?php echo $rowprod['product_id']; ?>" method="post"><button type="button" name="btn-edit" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-secondary">Edit</button>
+                        <td><form action="products.php?id= <?php echo $rowprod['product_id']; ?>" method="post">
+                        <button type="button" name="btn-edit" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-secondary">Edit</button>
                         <button type="submit" class="btn btn-danger" name="btn-delete">Delete</button></form></td>
                     </tr>
                         <?php } ?>

@@ -1,6 +1,6 @@
 <?php 
-    include("../connection/connection.php");
-    include('../cart.php');
+    require("../connection/connection.php");
+    require('../cart.php');
 
 
 ?>

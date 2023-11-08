@@ -11,12 +11,10 @@
     }
     if(isset($_POST["btn-delete"])){
         $getId = $_GET['id'];
-        //orders.php delete
-        $sqlorderDelete = "DELETE FROM order_details WHERE product_id = $getId";
-        $sqlorderDelete = mysqli_query( $conn, $sqlorderDelete);
         //products delete
         $sqlproductsDelete = "DELETE FROM products WHERE product_id = $getId";
         $sqlproductsDelete = mysqli_query( $conn, $sqlproductsDelete);
+        header("location: products.php");
 
     }
 
@@ -59,6 +57,14 @@
         while($rowOrder = $orderResult -> fetch_assoc()){
             $orderData[] = $rowOrder;
         }
+
+    if(isset($_POST["orderDelete"])){
+        $getId = $_GET['orderId'];
+        //orders.php delete
+        $sqlorderDelete = "DELETE FROM order_details WHERE product_id = $getId";
+        $sqlorderDelete = mysqli_query( $conn, $sqlorderDelete);
+        header("location: orders.php");
+    }
 ?>
 
 <?php
@@ -187,22 +193,97 @@
             $sqlCat = "INSERT INTO categories (category_name) VALUES ('$catName')";
             $sqlCat = mysqli_query($conn, $sqlCat);
             header("location: categories.php");
+            if($_SESSION['catMessage'] == ""){
+                $_SESSION['catMessage'] = "<h3>Category added successfully<h3>";
+            }
+
         }else{
-            echo "<script>
-                document.addEventListener('DOMContentLoaded', function() {
-                alert('Invalid Category name!');
-             });
-            </script>";
+            $_SESSION['catMessage'] = "<h3 class='text-center text-danger'>Category is already exist!<h3>";
         }
-    }if(isset($_POST["deleteCat"])){
+    }else{
+        $_SESSION['catMessage'] = "";
+    }
+    
+    if(isset($_POST["deleteCat"])){
         $getId = $_GET['id'];
         $sqlcatDel = "DELETE FROM categories WHERE category_id = $getId";
         $sqlcatDel = mysqli_query($conn, $sqlcatDel);
         header("location: categories.php");
     }if(isset($_POST["catSave"])){
         $getId = $_GET['id'];
-        $modalcatName = $_POST["modalcatName"];
-        $sqlCat = "UPDATE categories SET category_name = '$modalcatName' WHERE category_id = $getId";
-        $sqlCat = mysqli_query($conn, $sqlCat);
+        $modalcatName = $_POST['modalcatName'];
+        $sqlcatCheck = "SELECT * FROM categories WHERE category_name = '$modalcatName'";
+        $sqlcatCheck = mysqli_query($conn, $sqlcatCheck);
+        if(mysqli_num_rows($sqlcatCheck) === 0){
+            $modalcatName = $_POST["modalcatName"];
+            $sqlCat = "UPDATE categories SET category_name = '$modalcatName' WHERE category_id = $getId";
+            $sqlCat = mysqli_query($conn, $sqlCat);
+            $_SESSION['catMessage'] = "<h3 class='text-center text-success'>Updated successfulyy<h3>";
+        }else{
+            $_SESSION["catMessage"] = "<h3 class='text-center text-danger'>Invalid Category Name!<h3>";
+        }
+    }
+?>
+
+<?php 
+    //Account.php region
+    //Fetch data from db
+    $sqlAccount = "SELECT * FROM users JOIN roles ON users.role_id = roles.role_id";
+    $sqlAccount = mysqli_query($conn, $sqlAccount);
+    while($accRow = $sqlAccount->fetch_assoc()){
+        $accData[] = $accRow;
+    }
+    $sqlRole = "SELECT * FROM roles";
+    $sqlRole = mysqli_query($conn, $sqlRole);
+    while($roleRow = $sqlRole->fetch_assoc()){
+        $roleData[] = $roleRow;
+    }
+
+    //insert date
+    if(isset($_POST["addAcc"])){
+        $accRole = $_POST["accRole"];
+        $accUsername = $_POST["accUsername"];
+        $accPassword = $_POST["accPassword"];
+        $accNickname = $_POST["accNickname"];
+        $accbirthdate = $_POST["accBirthdate"];
+        $accAge = $_POST["accAge"];
+        $accGender = $_POST["accGender"];
+        $sqlcheckAcc = "SELECT * FROM users WHERE username = '$accUsername'";
+        $sqlcheckAcc = mysqli_query($conn, $sqlcheckAcc);
+        if(mysqli_num_rows($sqlcheckAcc) === 0){
+            $sqlinsertAcc = "INSERT INTO users (role_id, username, password, display_name, birthdate, age, gender)
+            VALUES ((SELECT role_id FROM roles WHERE role_id = $accRole), '$accUsername', '$accPassword', '$accNickname', '$accbirthdate','$accAge','$accGender')";
+            $sqlinsertAcc = mysqli_query($conn, $sqlinsertAcc);
+            if($_SESSION['accMessage'] == ""){
+                $_SESSION['accMessage'] = "<h1 class='text-center text-white bg-success'>Account has been added successfully</h1>";
+            }
+        }else{
+            $_SESSION['accMessage'] = "<h1 class='text-center text-white bg-danger'>Account is already exist<h1>";
+        }
+    }else{
+        $_SESSION['accMessage'] = "";
+    }
+?>
+<?php
+    if(isset($_POST["modaddAcc"])){
+        $userId = $_GET['userId'];
+        $modaccRole = $_POST["modaccRole"];
+        $modaccUsername = $_POST["modaccUsername"];
+        $modaccPassword = $_POST["modaccPassword"];
+        $modaccNickname = $_POST["modaccNickname"];
+        $modaccBirthdate = $_POST["modaccBirthdate"];
+        $modaccAge = $_POST["modaccAge"];
+        $modaccGender = $_POST["modaccGender"];
+        $sqlmodcheckAcc = "SELECT * FROM users WHERE username = '$modaccUsername'";
+        $sqlmodcheckAcc = mysqli_query($conn, $sqlmodcheckAcc);
+        if(mysqli_num_rows($sqlmodcheckAcc) === 0){
+            $sqlaccUpdate = "UPDATE users SET role_id = '$modaccRole', username = '$modaccUsername', password = '$modaccPassword', display_name = '$modaccNickname', birthdate = '$modaccBirthdate',age = '$modaccAge', gender = '$modaccGender' WHERE user_id = '$userId'";
+            $sqlaccUpdate = mysqli_query($conn, $sqlaccUpdate);
+            $_SESSION['accMessage'] = "<h1 class='text-center text-white bg-success'>Account updated successfully<h1>";
+        }else{
+            $_SESSION['accMessage'] = "<h1 class='text-center text-white bg-danger'>Invalid account username!<h1>";
+        }
+        }else{
+        $_SESSION["accMessage"] = "";
     }
 ?>

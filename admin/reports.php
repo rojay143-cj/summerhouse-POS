@@ -1,6 +1,6 @@
 <?php 
-    include("../connection/connection.php");
-    include("source.php");
+    require("../connection/connection.php");
+    require("source.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -42,7 +42,7 @@
                     <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                     <li class="nav-bar mt-2"><a href="admin.php" class="nav-link px-2 text-white">Home</a></li>
                     <li class="nav-bar mt-2"><a href="orders.php" class="nav-link px-2 text-white">Orders</a></li>
-                    <li class="nav-bar mt-2"><a href="" class="nav-link px-2 text-white" id="active">Reports</a></li>
+                    <li class="nav-bar mt-2"><a href="reports.php" class="nav-link px-2 text-white" id="active">Reports</a></li>
                     <li class="nav-bar mt-2"><a href="products.php" class="nav-link px-2 text-white">Products</a></li>
                     <li class="nav-bar mt-2"><a href="categories.php" class="nav-link px-2 text-white">Categories</a></li>
                     <li class="nav-bar mt-2"><a href="accounts.php" class="nav-link px-2 text-white">Accounts</a></li>
