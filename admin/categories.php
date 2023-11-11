@@ -85,6 +85,7 @@
                 </div>
             </form>
             <p><?php echo $_SESSION['catMessage']; ?></p>
+            <p><?php echo $_SESSION['modcatMessage']; ?></p>
         </div>
         <?php
         if(isset($_POST['catEdit']))

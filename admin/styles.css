@@ -1,0 +1,95 @@
+body {
+    background-color: #fff;
+    margin: 0;
+    padding: 0;
+    }
+  /* HEADER START */
+  .header-style{
+    background-color: rgba(20, 21, 55);
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-weight: bold;
+  }
+  .btn-log{
+    text-decoration: none;
+    padding: 10px;
+    background-color: rgb(255, 128, 0);
+    box-shadow: 5px 6px 6px rgba(20, 21, 55);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 15px;
+    transition: background-color 0.2s ease-in-out;
+  }#checkOut:hover{
+    background-color: green;
+    color: #fff;
+  }.welcome{
+    margin-right: 5px;
+  }
+  .nav-bar{
+    margin-left: 5px;
+  }
+
+  /* item Lists START */
+  #item-list{
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    border: none;
+  }
+   /* order Lists START */
+ #list{
+    margin-left: auto;
+    width: 655px;
+    height: 100%;
+  } #list-list{
+    border: none;
+  }#orderlist{
+    border: 1px solid rgb(168, 166, 166);
+  }
+
+
+  /* Check Out START */
+  .orderList{
+    border: 1px solid rgba(20, 21, 55);
+    padding: 10px;
+    width: 100%;
+  }.modal-footer .payType, .placeText{
+    width: 100%;
+    height: 40px;
+    margin-top: 10px;
+    font-size: 17px;
+  }.txtArea{
+    height: 120px;
+  }.totalFoot{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    border: 1px solid rgba(20, 21, 55);;
+    margin: 15px;
+    padding: 15px;
+  
+  }.totalText{
+    text-align: left;
+    font-size: 17px;
+    color: green;
+  }.total{
+    text-align: right;
+    font-size: 17px;
+    color: green;
+  }
+  
+  /* Overview CSS & reports */
+  .table-wrap{
+    background-color: #FFF2E4;
+    color: rgba(20, 21, 55);
+    font-family: summerGotlight;
+    border: 5px solid #fff;
+  }.modalMain{
+    font-family: summerGotlight;
+    font-size: 16px;
+  }.reports-container{
+    font-family: summerGotlight;
+    background-color: #FFF2E4;
+    border: 5px solid #fff;
+  }.reportBox1{
+    border-radius: 50%;
+  }

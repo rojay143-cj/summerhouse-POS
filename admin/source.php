@@ -93,7 +93,7 @@
     $sqltotalOrder = mysqli_query($conn, $sqltotalOrder);
     while($totOrder = $sqltotalOrder -> fetch_array()) {
         $totOrderData[] = $totOrder;
-    }
+    } 
 
 
     //WEEKLY
@@ -192,9 +192,8 @@
         if(mysqli_num_rows($sqlcatCheck) === 0){
             $sqlCat = "INSERT INTO categories (category_name) VALUES ('$catName')";
             $sqlCat = mysqli_query($conn, $sqlCat);
-            header("location: categories.php");
             if($_SESSION['catMessage'] == ""){
-                $_SESSION['catMessage'] = "<h3>Category added successfully<h3>";
+                $_SESSION['catMessage'] = "<h3 class='text-center text-success'>Category added successfully<h3>";
             }
 
         }else{
@@ -218,10 +217,14 @@
             $modalcatName = $_POST["modalcatName"];
             $sqlCat = "UPDATE categories SET category_name = '$modalcatName' WHERE category_id = $getId";
             $sqlCat = mysqli_query($conn, $sqlCat);
-            $_SESSION['catMessage'] = "<h3 class='text-center text-success'>Updated successfulyy<h3>";
+            if($_SESSION['modcatMessage'] == ""){
+                $_SESSION['modcatMessage'] = "<h3 class='text-center text-success'>Updated successfulyy<h3>";
+            }
         }else{
-            $_SESSION["catMessage"] = "<h3 class='text-center text-danger'>Invalid Category Name!<h3>";
+            $_SESSION["modcatMessage"] = "<h3 class='text-center text-danger'>Invalid Category Name!<h3>";
         }
+    }else{
+        $_SESSION["modcatMessage"] = "";
     }
 ?>
 
@@ -258,10 +261,16 @@
                 $_SESSION['accMessage'] = "<h1 class='text-center text-white bg-success'>Account has been added successfully</h1>";
             }
         }else{
-            $_SESSION['accMessage'] = "<h1 class='text-center text-white bg-danger'>Account is already exist<h1>";
+            $_SESSION['accMessage'] = "<h1 class='text-center text-white bg-danger'>Account is already exist!<h1>";
         }
     }else{
         $_SESSION['accMessage'] = "";
+    }if(isset($_POST["deleteAcc"])){
+        $getId = $_GET['userId'];
+        //products delete
+        $sqlaccDelete = "DELETE FROM users WHERE user_id = $getId";
+        $sqlaccDelete = mysqli_query( $conn, $sqlaccDelete);
+        header("location: accounts.php");
     }
 ?>
 <?php
@@ -279,11 +288,11 @@
         if(mysqli_num_rows($sqlmodcheckAcc) === 0){
             $sqlaccUpdate = "UPDATE users SET role_id = '$modaccRole', username = '$modaccUsername', password = '$modaccPassword', display_name = '$modaccNickname', birthdate = '$modaccBirthdate',age = '$modaccAge', gender = '$modaccGender' WHERE user_id = '$userId'";
             $sqlaccUpdate = mysqli_query($conn, $sqlaccUpdate);
-            $_SESSION['accMessage'] = "<h1 class='text-center text-white bg-success'>Account updated successfully<h1>";
+            $_SESSION['modaccMessage'] = "<h1 class='text-center text-white bg-success'>Account updated successfully<h1>";
         }else{
-            $_SESSION['accMessage'] = "<h1 class='text-center text-white bg-danger'>Invalid account username!<h1>";
+            $_SESSION['modaccMessage'] = "<h1 class='text-center text-white bg-danger'>Invalid account username!<h1>";
         }
         }else{
-        $_SESSION["accMessage"] = "";
+        $_SESSION["modaccMessage"] = "";
     }
 ?>

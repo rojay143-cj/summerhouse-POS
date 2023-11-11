@@ -36,6 +36,7 @@
         if(!empty($_POST['payType']) && !empty($_POST['txtCus']) && !empty($_POST['txtPayamount'])){
             $payType = $_POST['payType'];
             $txtCus = $_POST['txtCus'];
+            $txtmobnumber = $_POST['txtmobnumber'];
             $txtPayamount = $_POST['txtPayamount'];
             $txtNote = $_POST['txtNote'];
             $grandtotal = $_SESSION['grandtotal'];
@@ -43,8 +44,8 @@
             if($txtPayamount < $grandtotal){
                 $_SESSION['msg'] = "<h5 class='text-danger'>Sorry, Invalid payment amount!</h5>";
             }else{
-                $sqlOrders = "INSERT INTO orders (user_id, total_amount, customer_name, payment_type, amount_tendered, change_amount, notes) 
-                VALUES ((SELECT user_id FROM users WHERE user_id = $txtUserId),$grandtotal, '$txtCus', '$payType', '$txtPayamount',$txtPayamount - $grandtotal, '$txtNote')";
+                $sqlOrders = "INSERT INTO orders (user_id, total_amount, customer_name, mobile_num, payment_type, amount_tendered, change_amount, notes) 
+                VALUES ((SELECT user_id FROM users WHERE user_id = $txtUserId),$grandtotal, '$txtCus', '$txtmobnumber', '$payType', '$txtPayamount',$txtPayamount - $grandtotal, '$txtNote')";
                 $sqlOrders = mysqli_query($conn,$sqlOrders);
                 //Insert to Order_details
                 foreach($_SESSION['cart'] as $k => $Q){
@@ -52,14 +53,26 @@
                     $sqldetails = mysqli_query($conn, $sqldetails);
                      while($details = $sqldetails -> fetch_assoc()){
                         $currentId = $details['order_id'];
+                        $_SESSION['orderid'] = $details['order_id'];
+                        $_SESSION['customer'] = $details['customer_name'];
+                        $_SESSION['pay'] = $details['amount_tendered'];
+                        $_SESSION['total'] = $details['total_amount'];
+                        $_SESSION['change'] = $details['change_amount'];
+                        $_SESSION['type'] = $details['payment_type'];
                     }
                     $sqlInsertOrder = "INSERT INTO order_details (order_id, product_id, quantity, subtotal) 
                     VALUES ((SELECT order_id FROM orders WHERE order_id = $currentId),(SELECT product_id FROM products WHERE product_id = $k),'$Q',(SELECT price FROM products WHERE product_id = $k)*$Q)";
                     $sqlInsertOrder = mysqli_query($conn, $sqlInsertOrder);
                 }
                 $_SESSION['cart'] = array();
-                if(($_SESSION['msg'] == "")){
-                    $_SESSION['msg'] = "<h5 class='text-success'>Sucess: Order/s has been Placed</h5>";
+                if(($_SESSION['msg'] == "Empty")){
+                    $_SESSION['msg'] = "<h5 class='text-success text-start mb-4'>Sucess: Order/s has been Placed</h5>".
+                    "<p class='text-secondary text-start'>Order Id: #".$_SESSION['orderid']."</p>".
+                    "<p class='text-secondary text-start'>Ordered By: ".$_SESSION['customer']."</p>".
+                    "<p class='text-secondary text-start'>Amount Tendered: Php ".$_SESSION['pay']."</p>".
+                    "<p class='text-secondary text-start'>Total Paid: Php ".$_SESSION['total']."</p>".
+                    "<p class='text-secondary text-start'>Change: Php ".$_SESSION['change']."</p>".
+                    "<p class='text-secondary text-start'>Payment method: ".$_SESSION['type']."</p>";
                 }
             }
         }
@@ -67,7 +80,7 @@
             $_SESSION['msg'] = "<h5 class='text-danger'>Order cancelled: Fill-up all the form</h5>";
         }
     }else{
-        $_SESSION['msg'] = "";
+        $_SESSION['msg'] = "Empty";
     }
     //END REGION ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 ?>
@@ -108,5 +121,13 @@ if($result -> num_rows > 0){
     if(($_SESSION['txtUsername'] == "")){
         header('location: ../logout.php');
         
+    }
+?>
+
+<?php 
+    $sqlOrdertable = "SELECT * FROM orders";
+    $sqlOrdertable = mysqli_query($conn, $sqlOrdertable);
+    while($orderTable = $sqlOrdertable -> fetch_assoc()){
+        $ordertableData[] = $orderTable;
     }
 ?>

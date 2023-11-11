@@ -129,7 +129,8 @@
                 </div>
             </form>
         </div>
-        <p><?php echo $_SESSION['accMessage']; ?></p>
+        <p><?php echo $_SESSION['modaccMessage']; ?></p>
+        <span><?php echo $_SESSION['accMessage']; ?></span>
         <?php
         if(isset($_POST['accEdit']))
         {
