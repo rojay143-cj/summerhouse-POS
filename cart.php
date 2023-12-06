@@ -24,11 +24,14 @@
             }
         }if(isset($_POST['btn-plus'])){
             $_SESSION['cart'][$getId] += 1;
+        }if(isset($_POST['btn-remove'])){
+            unset($_SESSION['cart'][$getId]);
         }
     }else{
-        $_SESSION['cart'] = array();
+        //$_SESSION['cart'] = array();
     }//get the food id & validate the product if it's set
 ?>
+
 <?php
     //↓↓↓↓↓↓↓↓↓↓↓↓↓↓ Ordering and Listing Product via Session ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
     $txtUserId = $_SESSION['userId'];
@@ -44,8 +47,8 @@
             if($txtPayamount < $grandtotal){
                 $_SESSION['msg'] = "<h5 class='text-danger'>Sorry, Invalid payment amount!</h5>";
             }else{
-                $sqlOrders = "INSERT INTO orders (user_id, total_amount, customer_name, mobile_num, payment_type, amount_tendered, change_amount, notes) 
-                VALUES ((SELECT user_id FROM users WHERE user_id = $txtUserId),$grandtotal, '$txtCus', '$txtmobnumber', '$payType', '$txtPayamount',$txtPayamount - $grandtotal, '$txtNote')";
+                $sqlOrders = "INSERT INTO orders (user_id, total_amount, customer_name, mobile_num, payment_type, amount_tendered, change_amount, notes,order_stat) 
+                VALUES ((SELECT user_id FROM users WHERE user_id = $txtUserId),$grandtotal, '$txtCus', '$txtmobnumber', '$payType', '$txtPayamount',$txtPayamount - $grandtotal, '$txtNote','Processing')";
                 $sqlOrders = mysqli_query($conn,$sqlOrders);
                 //Insert to Order_details
                 foreach($_SESSION['cart'] as $k => $Q){
@@ -58,21 +61,34 @@
                         $_SESSION['pay'] = $details['amount_tendered'];
                         $_SESSION['total'] = $details['total_amount'];
                         $_SESSION['change'] = $details['change_amount'];
+                        $_SESSION['mobile'] = $details['mobile_num'];
+                        $_SESSION['date'] = $details['created_at'];
                         $_SESSION['type'] = $details['payment_type'];
+                        $_SESSION['discount'] = $details['discount'];
+                        $_SESSION['vat'] = $details['vat'];
                     }
                     $sqlInsertOrder = "INSERT INTO order_details (order_id, product_id, quantity, subtotal) 
                     VALUES ((SELECT order_id FROM orders WHERE order_id = $currentId),(SELECT product_id FROM products WHERE product_id = $k),'$Q',(SELECT price FROM products WHERE product_id = $k)*$Q)";
                     $sqlInsertOrder = mysqli_query($conn, $sqlInsertOrder);
+                    $sqlorderdetails = "SELECT * FROM order_details JOIN products ON order_details.product_id = products.product_id";
+                    $sqlorderdetails = mysqli_query($conn, $sqlorderdetails);
+                    while($orderdetails = $sqlorderdetails -> fetch_assoc()){
+                        $_SESSION['products'] = $orderdetails['product_name'];
+                    }
                 }
                 $_SESSION['cart'] = array();
                 if(($_SESSION['msg'] == "Empty")){
-                    $_SESSION['msg'] = "<h5 class='text-success text-start mb-4'>Sucess: Order/s has been Placed</h5>".
-                    "<p class='text-secondary text-start'>Order Id: #".$_SESSION['orderid']."</p>".
+                    $_SESSION['msg'] = "<h5 class='text-white bg-warning text-center mb-4'>Sucess: Order/s has been Placed</h5>".
+                    "<p class='text-secondary text-start'>Order ID: #".$_SESSION['orderid']."</p>".
                     "<p class='text-secondary text-start'>Ordered By: ".$_SESSION['customer']."</p>".
                     "<p class='text-secondary text-start'>Amount Tendered: Php ".$_SESSION['pay']."</p>".
                     "<p class='text-secondary text-start'>Total Paid: Php ".$_SESSION['total']."</p>".
                     "<p class='text-secondary text-start'>Change: Php ".$_SESSION['change']."</p>".
-                    "<p class='text-secondary text-start'>Payment method: ".$_SESSION['type']."</p>";
+                    "<p class='text-secondary text-start'>Date: ".$_SESSION['date']."</p>".
+                    "<p class='text-secondary text-start'>Mobile No.: ".$_SESSION['mobile']."</p>".
+                    "<p class='text-secondary text-start'>Payment method: ".$_SESSION['type']."</p>".
+                    "<p class='text-secondary text-start'>Discount: ".$_SESSION['discount']."</p>".
+                    "<p class='text-secondary text-start'>VAT: ".$_SESSION['vat']."</p>";
                 }
             }
         }

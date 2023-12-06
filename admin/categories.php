@@ -9,13 +9,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Summerhouse Cafe</title>
-    <link rel="stylesheet" href="../css/summerStyles.css">
+    <link rel="stylesheet" href="mystyle.css">
     <link rel="stylesheet" href="../api/datatable.css">
     <script src="../api/datatable.js"></script>
     <style>
         #container{
             display: grid;
-            grid-template-columns: auto auto auto;
+            grid-template-columns: auto auto;
             column-gap: 20px;
         }
         .flow{
@@ -25,8 +25,8 @@
     </style>
 </head>
 <body>
-    <header class="p-2 header-style"">
-            <div class="container">
+    <header class="p-2 header-style">
+            <div class="container-fluid">
                 <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
                     <a href="admin.php" class="nav-link px-2 text-white"><img src="../images/logo.png" alt="logo" style="height: 90px;width: 90px;border-radius: 50%;object-fit: contain"></a>
                     <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
@@ -34,25 +34,28 @@
                     <li class="nav-bar mt-2"><a href="orders.php" class="nav-link px-2 text-white">Orders</a></li>
                     <li class="nav-bar mt-2"><a href="reports.php" class="nav-link px-2 text-white">Reports</a></li>
                     <li class="nav-bar mt-2"><a href="products.php" class="nav-link px-2 text-white">Products</a></li>
-                    <li class="nav-bar mt-2"><a href="categories.php" class="nav-link px-2 text-white"  id="active">Categories</a></li>
+                    <li class="nav-bar mt-2"><a href="categories.php" class="nav-link px-2" id="active">Categories</a></li>
                     <li class="nav-bar mt-2"><a href="accounts.php" class="nav-link px-2 text-white">Accounts</a></li>
+                    <li class="nav-bar mt-2"><a href="SMS.php" class="nav-link px-2 text-white">Send SMS</a></li>
                     </ul>
                     <div class="text-end">
                     <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
                     <span class="text-white">Welcome, <?php echo $_SESSION['displayName']."! "."(".$_SESSION['roleType']." - ".$_SESSION['roleDes'].")" ?></span>
-                    <a class="checkOut" href="../logout.php">Logout</a>
+                    <a class="btn-log" href="../logout.php">Logout</a>
                     </div>
                     </form>
                 </div>
             </div>
     </header>
-    <div class="container mt-5" id="container">
+    <div class="container-fluid mt-5" id="container">
         <div class="flow shadow p-3 mb-5 bg-body rounded">
             <table id="example" class="table table-striped" style="width:100%">
                 <thead>
                     <tr>
                         <th class="text-center">Category ID</th>
                         <th class="text-center">Category Name</th>
+                        <th class="text-center">Date Category Created</th>
+                        <th class="text-center">Last Updated</th>
                         <th class="text-end">Actions</th>
                     </tr>
                 </thead>
@@ -63,6 +66,8 @@
                     <tr>
                         <td width="25%"><?php echo $rows['category_id']; ?></td>
                         <td><?php echo $rows['category_name']; ?></td>
+                        <td><?php echo $rows['created_at']; ?></td>
+                        <td><?php echo $rows['updated_at']; ?></td>
                         <td class="text-end" width="25%"><form action="categories.php?id=<?php echo $rows['category_id']; ?>" method="POST">
                         <button type="submit" name="catEdit" class="btn btn-secondary" value="<?php echo $rows['category_id'];?>">Edit</button>
                         <button type="submit" id="del" class="btn btn-danger" name="deleteCat">Delete</button></form></td>
@@ -73,7 +78,7 @@
             </div>
             <form action="<?php htmlspecialchars($_SERVER["PHP_SELF"]) ?>" method="POST">
                 <div class="shadow p-3 mb-5 bg-body rounded">
-                <h4>Add Category</h4>
+                <h4 class="text-center sunborn">★Add Category</h4>
                 <div>
                 <div class="input-group mt-3">
                     <span class="input-group-text">Category Name</span>

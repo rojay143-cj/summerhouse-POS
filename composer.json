@@ -1,0 +1,8 @@
+{
+	"require": {
+		"guzzlehttp/guzzle": "~7.0",
+		"ext-curl": "*",
+		"ext-json": "*",
+		"infobip/infobip-api-php-client": "^5.0"
+	}
+}

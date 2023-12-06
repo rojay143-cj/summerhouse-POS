@@ -9,13 +9,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Summerhouse Cafe</title>
-    <link rel="stylesheet" href="../css/summerStyles.css">
+    <link rel="stylesheet" href="mystyle.css">
     <link rel="stylesheet" href="../api/datatable.css">
     <script src="../api/datatable.js"></script>
     <style>
         #container{
             display: grid;
-            grid-template-columns: auto auto auto;
+            grid-template-columns: auto auto;
             column-gap: 20px;
         }
         .flow{
@@ -25,8 +25,8 @@
     </style>
 </head>
 <body>
-    <header class="p-2 header-style"">
-            <div class="container">
+    <header class="p-2 header-style">
+            <div class="container-fluid">
                 <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
                     <a href="admin.php" class="nav-link px-2 text-white"><img src="../images/logo.png" alt="logo" style="height: 90px;width: 90px;border-radius: 50%;object-fit: contain"></a>
                     <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
@@ -35,19 +35,20 @@
                     <li class="nav-bar mt-2"><a href="reports.php" class="nav-link px-2 text-white">Reports</a></li>
                     <li class="nav-bar mt-2"><a href="products.php" class="nav-link px-2 text-white">Products</a></li>
                     <li class="nav-bar mt-2"><a href="categories.php" class="nav-link px-2 text-white">Categories</a></li>
-                    <li class="nav-bar mt-2"><a href="accounts.php" class="nav-link px-2 text-white"   id="active">Accounts</a></li>
+                    <li class="nav-bar mt-2"><a href="accounts.php" class="nav-link px-2" id="active">Accounts</a></li>
+                    <li class="nav-bar mt-2"><a href="SMS.php" class="nav-link px-2 text-white">Send SMS</a></li>
                     </ul>
                     <div class="text-end">
                     <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
                     <span class="text-white">Welcome, <?php echo $_SESSION['displayName']."! "."(".$_SESSION['roleType']." - ".$_SESSION['roleDes'].")" ?></span>
-                    <a class="checkOut" href="../logout.php">Logout</a>
+                    <a class="btn-log" href="../logout.php">Logout</a>
                     </div>
                     </form>
                 </div>
             </div>
     </header>
     <br>
-    <div class="container mt-5" id="container">
+    <div class="container-fluid mt-5" id="container">
         <div class="shadow p-3 mb-5 bg-body rounded">
             <table id="example" class="table table-striped" style="width:100%">
                 <thead>
@@ -60,6 +61,9 @@
                         <th class="text-end">Birthdate</th>
                         <th class="text-end">Age</th>
                         <th class="text-end">Gender</th>
+                        <th class="text-end">Mobile number</th>
+                        <th class="text-end">Date Account Registered</th>
+                        <th class="text-end">Last Update</th>
                         <th class="text-end">Action</th>
 
                     </tr>
@@ -79,6 +83,9 @@
                         <td><?php echo $accRow['birthdate']; ?></td>
                         <td><?php echo $accRow['age']; ?></td>
                         <td><?php echo $accRow['gender']; ?></td>
+                        <td><?php echo $accRow['mobile_num']; ?></td>
+                        <td><?php echo $accRow['registered_at']; ?></td>
+                        <td><?php echo $accRow['updated_at']; ?></td>
                         <td class="text-center"><form action="accounts.php?userId=<?php echo $accRow['user_id']; ?>" method="POST">
                         <button type="submit" name="accEdit" class="btn btn-secondary">Edit</button>
                         <button type="submit" id="del" class="btn btn-danger" name="deleteAcc">Delete</button></form></td>
@@ -88,8 +95,8 @@
             </table>
             </div>
             <form action="<?php htmlspecialchars($_SERVER["PHP_SELF"]) ?>" method="POST">
-                <div class="shadow p-3 mb-5 bg-body rounded">
-                <h4>Add Account</h4>
+                <div class="shadow p-3 mb-5 bg-body rounded text-center">
+                    <h4 class="sunborn text-center">★Add Account</h4>
                 <div>
                 <select class="form-select form-select-lg" name="accRole">
                     <option class="text-secondary">SELECT ROLE</option>
@@ -103,7 +110,11 @@
                 </div>
                 <div class="input-group mt-3">
                     <span class="input-group-text">Password</span>
-                    <input type="text" class="form-control"  name="accPassword" required>
+                    <input type="password" class="form-control"  name="accPassword" required>
+                </div>
+                <div class="input-group mt-3 w-auto">
+                    <span class="input-group-text">Mobile number</span>
+                    <input type="text" placeholder="+639*********" minlength="13" maxlength="13" class="form-control" name="otpNumber" required>
                 </div>
                 <div class="input-group mt-3">
                     <span class="input-group-text">Nickname</span>
@@ -111,7 +122,7 @@
                 </div>
                 <div class="input-group mt-3">
                     <span class="input-group-text">Birthdate</span>
-                    <input type="text" class="form-control"  name="accBirthdate" required>
+                    <input type="date" class="form-control"  name="accBirthdate" required>
                 </div>
                 <div class="input-group mt-3">
                     <span class="input-group-text">Age</span>
@@ -129,7 +140,6 @@
                 </div>
             </form>
         </div>
-        <p><?php echo $_SESSION['modaccMessage']; ?></p>
         <span><?php echo $_SESSION['accMessage']; ?></span>
         <?php
         if(isset($_POST['accEdit']))
@@ -166,7 +176,11 @@
                             </div>
                             <div class="input-group mt-3">
                                 <span class="input-group-text">Password</span>
-                                <input type="text" class="form-control"  name="modaccPassword" required>
+                                <input type="password" class="form-control"  name="modaccPassword" required>
+                            </div>
+                            <div class="input-group mt-3 w-auto">
+                                <span class="input-group-text">Mobile number</span>
+                                <input type="text" placeholder="+639*********" minlength="13" maxlength="13" class="form-control" name="modotpNumber" required>
                             </div>
                             <div class="input-group mt-3">
                                 <span class="input-group-text">Nickname</span>
@@ -174,7 +188,7 @@
                             </div>
                             <div class="input-group mt-3">
                                 <span class="input-group-text">Birthdate</span>
-                                <input type="text" class="form-control"  name="modaccBirthdate" required>
+                                <input type="date" class="form-control"  name="modaccBirthdate" required>
                             </div>
                             <div class="input-group mt-3">
                                 <span class="input-group-text">Age</span>
