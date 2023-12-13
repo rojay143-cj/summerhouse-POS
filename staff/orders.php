@@ -26,7 +26,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ORDERS</title>
-    <link rel="stylesheet" href="../admin/mystyle.css">
+    <link rel="stylesheet" href="../admin/mystyles.css">
     <link rel="stylesheet" href="../api/datatable.css">
     <script src="../api/datatable.js"></script>
     <style>
@@ -37,26 +37,37 @@
 </head>
 <body>
     <header class="p-2 header-style">
-        <div class="container-fluid">
-            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-                <a href="admin.php" class="nav-link px-2 text-white"><img src="../images/logo.png" alt="logo" style="height: 90px;width: 90px;border-radius: 50%;object-fit: contain"></a>
-                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                <li class="nav-bar mt-2"><a href="staff.php" class="nav-link px-2 text-white">Home</a></li>
-                <li class="nav-bar mt-2"><a href="orders.php" class="nav-link px-2" id="active">Orders</a></li>
-                </ul>
-                <div class="text-end">
-                <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-                <span class="text-white">Welcome, <?php echo $_SESSION['displayName']."! "."(".$_SESSION['roleType']." - ".$_SESSION['roleDes'].")" ?></span>
-                <a class="btn-log" href="../logout.php">Logout</a>
+            <div class="container-fluid">
+            <a href="admin.php" class="nav-link px-2 text-white w-25" id="logo1"><img src="../images/logo.png" alt="logo" style="height: 90px;width: 90px;border-radius: 50%;object-fit: contain"></a>
+                <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start head-nav">
+                <a href="staff.php" class="nav-link px-2 text-white" id="logo2"><img src="../images/logo.png" alt="logo" style="height: 90px;width: 90px;border-radius: 50%;object-fit: contain"></a>
+                    <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0" id="nav">
+                    <li class="nav-bar mt-2"><a href="staff.php" class="nav-link px-2 text-white">Home</a></li>
+                    <li class="nav-bar mt-2"><a href="orders.php" class="nav-link px-2" id="active">Orders</a></li>                 
+                    </ul>
+                    <div class="text-end">
+                    <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" id="welcome" role="search">
+                    <span class="text-white welcome">Welcome, <?php echo $_SESSION['displayName']."! "."(".$_SESSION['roleType']." - ".$_SESSION['roleDes'].")" ?></span>
+                    <a class="btn-log" href="../logout.php">Logout</a>
+                    </div>
+                    </form>
+                    <label for="menu-toggle" class="menu-icon fs-1">&#9776;</label>
+                    <input type="checkbox" id="menu-toggle">
                 </div>
-                </form>
+                <div class="dropdown_menu">
+                <ul class="dropdown_nav col-12 col-lg-auto me-lg-auto text-center mb-md-0">
+                    <li class="nav-bar"><a href="admin.php" class="nav-link px-2 text-white">Home</a></li>
+                    <li class="nav-bar mt-4"><a href="orders.php" class="nav-link px-2" id="active">Orders</a></li>
+                    <span class="text-white">Welcome, <?php echo $_SESSION['displayName']."! "."(".$_SESSION['roleType']." - ".$_SESSION['roleDes'].")" ?></span>
+                    <a class="btn fs-6 fw-bold text-white" style="background-color: rgb(255, 128, 0);" href="../logout.php">Logout</a>               
+                </ul>
             </div>
-        </div>
+            </div>
     </header>
     <div class="container-fluid">
     <div class="row">
         <div class="card-body mt-5">
-            <h1 class="text-center sunborn">★Transactions</h1>
+            <h1 class="text-center">★Transactions</h1>
             <div class="card mt-4 shadow-lg rounded" id="itemlist-wrapper" style="height: 700px; overflow-y: auto;">
             <table class="table table-striped table-borderless mt-5">
                 <thead>
@@ -65,8 +76,7 @@
                         <th><h5 class="text-secondary">CUSTOMER NAME</th>
                         <th><h5 class="text-secondary">PAYMENT TYPE</th>
                         <th><h5 class="text-secondary">ORDERED ON</th>
-                        <th><h5 class="text-secondary">MOBILE NUMBER</th>
-                        <th><h5 class="text-secondary"></th>
+                        <th><h5 class="text-secondary">ORDER STATUS</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -76,8 +86,28 @@
                             <td><?php echo $rowOrder['customer_name']; ?></td>
                             <td><?php echo $rowOrder['payment_type']; ?></td>
                             <td><?php echo $rowOrder['created_at']; ?></td>
-                            <td><?php echo $rowOrder['mobile_num']; ?></td>
-                            <td><h3>🔽</h3></td>
+                            <td><form action="orders.php?orderId=<?php echo $rowOrder['order_id']; ?>" method="post">
+                                    <select name="status" class="p-1" onchange="this.form.submit()">
+                                        <option value=""><?php echo $rowOrder['order_stat']; ?></option>
+                                        <option value="Unpaid">Unpaid</option>
+                                        <option value="Completed">Completed</option>
+                                        <option value="Cancelled">Cancelled</option>
+                                    </select>
+                                </form>
+                                <?php
+                                    if(isset($_POST['status'])){
+                                        $orderId = $_GET['orderId'];
+                                        $status = $_POST['status'];
+                                        $sqlStatus = "UPDATE orders SET order_stat = '$status' WHERE order_id = '$orderId'";
+                                        $sqlStatus = mysqli_query($conn, $sqlStatus);
+                                        echo'
+                                            <script>
+                                                window.location.href="orders.php";
+                                            </script>
+                                        ';
+                                    }
+                                ?>
+                            </td>
                         </tr>
                         <tr>
                             <td colspan="5">
@@ -115,6 +145,11 @@
                                         <ul class="list-group list-group-horizontal mx-2">
                                             <li class="list-group-item text-primary text-nowrap w-100 mb-3"><h5>Php <?php echo $rowread['total_amount']; ?>.00</h5></li>
                                             <li class="list-group-item text-start text-wrap mb-3 w-75">NOTE: <div><?php echo $rowread['notes']; ?></div></li>
+                                            <li class="list-group-item text-end text-nowrap text-white mb-3">
+                                                <form action="receipt.php?orderId=<?php echo $rowOrder['order_id']; ?>" method="post" target="_blank">
+                                                    <button type="submit" class="btn btn-info text-white">View receipt</button>
+                                                </form>
+                                            </li>
                                         </ul>
                                     </div>
                                 </div>
@@ -127,54 +162,9 @@
         </div>
     </div>
 </div>
-<!--
-
-
-
-    <div class="container-fluid mt-5">
-        <div class="row table-wrap pt-5 m-5">
-            <h1 class="text-center">★Transactions</h1>
-            <table id="example" class="table table-striped" style="width:100%">
-                <thead>
-                    <tr>
-                        <th>Ordered By</th>
-                        <th>Customer Name</th>
-                        <th>Product Name</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
-                        <th>Sub-Total</th>
-                        <th>Payment Method</th>
-                        <th>Ordered Date</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    if(isset($orderData)){
-                        foreach($orderData as $rowOrder){
-                            //$date = date_create($rowOrder["created_at"],timezone_open("Asia/Bangkok"));
-                            //echo date_format($date,"y-m-d h:m:s")
-                    ?>
-                    <tr>
-                        <td><?php echo $rowOrder['display_name']; ?></td>
-                        <td><?php echo $rowOrder['customer_name']; ?></td>
-                        <td><?php echo $rowOrder['product_name']; ?></td>
-                        <td>₱<?php echo $rowOrder['price']; ?></td>
-                        <td><?php echo $rowOrder['quantity']; ?><span style="font-size: 11px;">qty</span></td>
-                        <td>₱<?php echo $rowOrder['subtotal']; ?></td>
-                        <td><?php echo $rowOrder['payment_type']; ?></td>
-                        <td><?php echo $rowOrder['created_at']; ?></td>
-                        <td><form action="orders.php?orderId=<?php echo $rowOrder['product_id']; ?>" method="post">
-                        <button type="submit" class="btn btn-danger" name="orderDelete">Delete</button></form></td>
-                    </tr>
-                    <?php }} ?>
-                </tbody>
-            </table>
-        </div>
-    </div>
--->
     <script>
         new DataTable('#example');
     </script>
+    <script src="../summerJS/summers.js"></script>
 </body>
 </html>

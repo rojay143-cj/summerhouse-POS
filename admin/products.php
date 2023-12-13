@@ -2,13 +2,28 @@
     require("../connection/connection.php");
     require("source.php");
 ?>
+<?php
+    if (isset($_GET['prodid'])) {
+        $prodid = $_GET['prodid'];
+    } else {
+        $prodid = 0;
+    }
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $chkProd = isset($_POST['chkProd']) ? 1 : 0;
+
+        $sqlprodStat = "UPDATE products SET prod_stat = '$chkProd' WHERE product_id = '$prodid'";
+        $result = mysqli_query($conn, $sqlprodStat);
+        //header("location: products.php");
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Summerhouse Cafe</title>
-    <link rel="stylesheet" href="mystyle.css">
+    <link rel="stylesheet" href="mystyles.css">
     <link rel="stylesheet" href="../api/datatable.css">
     <script src="../api/datatable.js"></script>
     <style>
@@ -26,24 +41,38 @@
 <body>
     <header class="p-2 header-style">
             <div class="container-fluid">
-                <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-                    <a href="admin.php" class="nav-link px-2 text-white"><img src="../images/logo.png" alt="logo" style="height: 90px;width: 90px;border-radius: 50%;object-fit: contain"></a>
-                    <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+            <a href="admin.php" class="nav-link px-2 text-white w-25" id="logo1"><img src="../images/logo.png" alt="logo" style="height: 90px;width: 90px;border-radius: 50%;object-fit: contain"></a>
+                <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start head-nav">
+                <a href="admin.php" class="nav-link px-2 text-white" id="logo2"><img src="../images/logo.png" alt="logo" style="height: 90px;width: 90px;border-radius: 50%;object-fit: contain"></a>
+                    <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0" id="nav">
                     <li class="nav-bar mt-2"><a href="admin.php" class="nav-link px-2 text-white">Home</a></li>
                     <li class="nav-bar mt-2"><a href="orders.php" class="nav-link px-2 text-white">Orders</a></li>
                     <li class="nav-bar mt-2"><a href="reports.php" class="nav-link px-2 text-white">Reports</a></li>
                     <li class="nav-bar mt-2"><a href="products.php" class="nav-link px-2" id="active">Products</a></li>
                     <li class="nav-bar mt-2"><a href="categories.php" class="nav-link px-2 text-white">Categories</a></li>
-                    <li class="nav-bar mt-2"><a href="accounts.php" class="nav-link px-2 text-white">Accounts</a></li>
-                    <li class="nav-bar mt-2"><a href="SMS.php" class="nav-link px-2 text-white">Send SMS</a></li>
+                    <li class="nav-bar mt-2"><a href="accounts.php" class="nav-link px-2 text-white">Accounts</a></li>                    
                     </ul>
                     <div class="text-end">
-                    <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-                    <span class="text-white">Welcome, <?php echo $_SESSION['displayName']."! "."(".$_SESSION['roleType']." - ".$_SESSION['roleDes'].")" ?></span>
+                    <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" id="welcome" role="search">
+                    <span class="text-white welcome">Welcome, <?php echo $_SESSION['displayName']."! "."(".$_SESSION['roleType']." - ".$_SESSION['roleDes'].")" ?></span>
                     <a class="btn-log" href="../logout.php">Logout</a>
                     </div>
                     </form>
+                    <label for="menu-toggle" class="menu-icon fs-1">&#9776;</label>
+                    <input type="checkbox" id="menu-toggle">
                 </div>
+                <div class="dropdown_menu">
+                <ul class="dropdown_nav col-12 col-lg-auto me-lg-auto text-center mb-md-0">
+                    <li class="nav-bar"><a href="admin.php" class="nav-link px-2 text-white">Home</a></li>
+                    <li class="nav-bar mt-4"><a href="orders.php" class="nav-link px-2 text-white">Orders</a></li>
+                    <li class="nav-bar mt-4"><a href="reports.php" class="nav-link px-2 text-white">Reports</a></li>
+                    <li class="nav-bar mt-4"><a href="products.php" class="nav-link px-2" id="active">Products</a></li>
+                    <li class="nav-bar mt-4"><a href="categories.php" class="nav-link px-2 text-white">Categories</a></li>
+                    <li class="nav-bar mt-4 mb-4"><a href="accounts.php" class="nav-link px-2 text-white">Accounts</a></li>
+                    <span class="text-white">Welcome, <?php echo $_SESSION['displayName']."! "."(".$_SESSION['roleType']." - ".$_SESSION['roleDes'].")" ?></span>
+                    <a class="btn fs-6 fw-bold text-white" style="background-color: rgb(255, 128, 0);" href="../logout.php">Logout</a>               
+                </ul>
+            </div>
             </div>
     </header>
     <h3><?php echo $_SESSION['prodWarning']; ?></h3>
@@ -59,22 +88,32 @@
                         <th>Date Product Created</th>
                         <th>Last Update</th>
                         <th>Actions</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                        <?php foreach($data as $rowprod){ ?>
+                        <?php
+                            foreach($data as $rowprod){ 
+                        ?>
                     <tr>
                         <td><img src="<?php echo $rowprod['image']; ?>" style="height: 150px;width: 250px; object-fit: cover;border-radius: 10px;"></td>
                         <td width="5%"><?php echo $rowprod['product_name']; ?></td>
                         <td><?php echo $rowprod['price']; ?></td>
                         <td><?php echo $rowprod['category_name']; ?></td>
-                        <td><?php echo $rowprod['created_at']; ?></td>
+                        <td><?php echo $rowprod['prod_created_at']; ?></td>
                         <td><?php echo $rowprod['prod_updated_at']; ?></td>
-                        <td><form action="products.php?prodid=<?php echo $rowprod['product_id']; ?>" method="post">
-                        <button type="submit" name="btn-edit" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-secondary">Edit</button>
-                        <button type="submit" class="btn btn-danger" name="btn-delete">Delete</button></form></td>
+                        <form action="products.php?prodid=<?php echo $rowprod['product_id']; ?>" method="post"><td>
+                        <button type="submit" name="btn-edit" class="btn btn-secondary">Edit</button>
+                        <button type="submit" class="btn btn-danger" name="btn-delete">Delete</button></td>
+                        <td><span class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" value="checked" class="disable"
+                        <?php echo ($rowprod['prod_stat'] == 1) ? 'checked' : ''; ?> name="chkProd" id="flexSwitchCheckDefault" onchange="this.form.submit()">
+                        <label class="form-check-label" for="flexSwitchCheckDefault">Disable</label>
+                        </span></td></form>
                     </tr>
-                        <?php } ?>
+                        <?php 
+                            }
+                        ?>
                 </tbody>
             </table>
             </div>
@@ -115,7 +154,7 @@
                 <script>
                     $(document).ready(function(){
                         $("#exampleModal").modal("show");
-                    })
+                    });
                 </script>
                 ';
                     $sqlgetproducts = "SELECT * FROM products WHERE product_id = '$prodId'";
@@ -170,5 +209,6 @@
         <script>
             new DataTable('#example');
         </script>
+        <script src="../summerJS/summers.js"></script>
 </body>
 </html>

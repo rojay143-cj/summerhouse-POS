@@ -37,7 +37,7 @@
     </style>
 </head>
 <body>
-    <div class="container-fluid mt-5" id="container">
+    <div class="container-fluid" id="container">
         <div class="row">
             <div class="head-div text-center mb-5">
                 <a href="admin.php" class="nav-link px-2 text-white"><img src="../images/logo.png" alt="logo" style="height: 120px;width: 120px;border-radius: 50%;object-fit: contain"></a>
@@ -53,6 +53,9 @@
                     <h5>Receipt No. <?php echo $receiptrow['order_id']; ?></h5>
                     <h5>Date: <?php echo $receiptrow['created_at']; ?></h5>
                     <h5>Customer Name: <?php echo $receiptrow['customer_name']; ?></h5>
+                    <h5>Payment Method: <?php echo $receiptrow['payment_type']; ?></h5>
+                    <h5>Reference Number: <?php echo $receiptrow['ref_num']; ?></h5>
+                    <h5>Contact #: <?php echo $receiptrow['contact_num']; ?></h5>
                     <h5>Status: <span class="bg-secondary text-white p-2 rounded" style="font-size: 15px;"><?php echo $receiptrow['order_stat']; ?></span></h5>
                     <button class="btn btn-info mt-2 text-white" style="width: 120px;" id="receipt">Print Receipt</button>
                 </div>

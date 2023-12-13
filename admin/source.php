@@ -71,7 +71,7 @@
         }else{
             move_uploaded_file($tmp_img_name, $folder.$img_name);
         }
-        $sqlupdateProd = "UPDATE products SET product_name = '$modtxtprodname',price = '$modtxtprice',category_id = '$modtxtcat', image = '$location', updated_at = '$updatedDate' WHERE product_id = '$prodId'";
+        $sqlupdateProd = "UPDATE products SET product_name = '$modtxtprodname',price = '$modtxtprice',category_id = '$modtxtcat', image = '$location', prod_updated_at = '$updatedDate' WHERE product_id = '$prodId'";
         $sqlupdateProd = mysqli_query( $conn, $sqlupdateProd);
         $_SESSION['prodWarning'] ="<h3 class='text-white bg-success text-center p-2 m-2'>Product updated successfully</h3>";
     }
@@ -93,14 +93,6 @@
             $_SESSION['discount'] = $rowOrder['discount'];
             $_SESSION['vat'] = $rowOrder['vat'];
         }
-
-   /* if(isset($_POST["orderDelete"])){
-        $getId = $_GET['orderId'];
-        //orders.php delete
-        $sqlorderDelete = "DELETE FROM order_details WHERE product_id = $getId";
-        $sqlorderDelete = mysqli_query( $conn, $sqlorderDelete);
-        header("location: orders.php");
-    } */
 ?>
 
 <?php
@@ -270,7 +262,6 @@
             
             while ($rowbestseller = mysqli_fetch_array($result)) {
                 $bestData[] = $rowbestseller;
-
             }
     }
 ?>
@@ -355,30 +346,69 @@
         $roleData[] = $roleRow;
     }
 
-    //insert date
+    //Send Data to OTP page
     $_SESSION["accMessage"] = "";
+    require '../vendor/autoload.php';
+
+    use Vonage\Client;
+    use Vonage\Client\Credentials\Basic;
     if(isset($_POST["addAcc"])){
-        $accRole = $_POST["accRole"];
-        $accUsername = $_POST["accUsername"];
-        $accPassword = $_POST["accPassword"];
-        $accNickname = $_POST["accNickname"];
-        $otpNumber = $_POST["otpNumber"];
-        $accbirthdate = $_POST["accBirthdate"];
-        $accAge = $_POST["accAge"];
-        $accGender = $_POST["accGender"];
-        $sqlcheckAcc = "SELECT * FROM users WHERE username = '$accUsername'";
-        $sqlcheckAcc = mysqli_query($conn, $sqlcheckAcc);
-        if(mysqli_num_rows($sqlcheckAcc) === 0){
-            $sqlinsertAcc = "INSERT INTO users (role_id, username, password, mobile_num, display_name, birthdate, age, gender)
-            VALUES ((SELECT role_id FROM roles WHERE role_id = $accRole), '$accUsername', '$accPassword', '$otpNumber', '$accNickname', '$accbirthdate','$accAge','$accGender')";
-            $sqlinsertAcc = mysqli_query($conn, $sqlinsertAcc);
-            if($_SESSION['accMessage'] == ""){
-                $_SESSION['accMessage'] = "<h1 class='text-center text-white bg-success'>Account has been added successfully</h1>";
+        $accRole = mysqli_real_escape_string($conn, $_POST["accRole"]);
+        $accUsername = mysqli_real_escape_string($conn, $_POST["accUsername"]);
+        $sqlCheckUsername = "SELECT COUNT(*) as count FROM users WHERE username = '$accUsername'";
+        $resultCheckUsername = mysqli_query($conn, $sqlCheckUsername);
+        if ($resultCheckUsername) {
+            $row = mysqli_fetch_assoc($resultCheckUsername);
+            $count = $row['count'];
+    
+            if ($count > 0) {
+                $_SESSION['accMessage'] = "<h1 class='text-center text-white bg-danger'>Username already exists. Please choose a different username<h1>";
+            } else {
+                $accRole = $_POST["accRole"];
+                $accUsername = $_POST["accUsername"];
+                $accPassword = $_POST["accPassword"];
+                $accNickname = $_POST["accNickname"];
+                $otpNumber = $_POST["otpNumber"];
+                $accbirthdate = $_POST["accBirthdate"];
+                $accAge = $_POST["accAge"];
+                $accGender = $_POST["accGender"];
+
+                $apiKey = '5232a88f';
+                $apiSecret = 'PEPLMV9flkl3mGZl';
+                $fromNumber = '+639061008410';
+                $toNumber = $otpNumber;
+
+                $otp = mt_rand(1000, 9999);
+
+                $message = "Your OTP is: $otp";
+                $currentotp = $otp;
+
+                try {
+                    $basic = new Basic($apiKey, $apiSecret);
+                    $client = new Client($basic);
+
+                    $response = $client->message()->send([
+                        'to' => $toNumber,
+                        'from' => $fromNumber,
+                        'text' => $message
+                    ]);
+
+                    if ($response['messages'][0]['status'] == 0) {
+                        echo "OTP sent successfully!";
+                        $_SESSION['otp'] = $currentotp;
+                    } else {
+                        echo "Failed to send OTP. Error: " . $response['messages'][0]['error-text'];
+                    }
+                } catch (\Exception $e) {
+                    echo "Error: " . $e->getMessage();
+                }
+                header("location: verify.php");
+                $_SESSION['user'] = array($accRole, $accUsername, $accPassword, $otpNumber, $accNickname, $accbirthdate, $accAge, $accGender);
             }
-        }else{
-            $_SESSION['accMessage'] = "<h1 class='text-center text-white bg-danger'>Account is already exist!<h1>";
         }
-    }if(isset($_POST["deleteAcc"])){
+    }
+    //DELETE ACCOUNT
+    if(isset($_POST["deleteAcc"])){
         $getId = $_GET['userId'];
         //products delete
         $sqlaccDelete = "DELETE FROM users WHERE user_id = $getId";
@@ -387,6 +417,7 @@
     }
 ?>
 <?php
+    //Modal UPDATE'S RECORDS
     if(isset($_POST["modaddAcc"])){
         $userId = $_GET['userId'];
         $modaccRole = $_POST["modaccRole"];

@@ -2,16 +2,21 @@
     require("../connection/connection.php");
     require("source.php");
 ?>
+<?php 
+    if(empty($bestData) || empty($modData)){
+        $bestData = [];
+        $modData = [];
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Summerhouse Cafe</title>
-    <link rel="stylesheet" href="mystyle.css">
+    <link rel="stylesheet" href="mystyles.css">
     <link rel="stylesheet" href="../api/datatable.css">
     <script src="../api/datatable.js"></script>
-    <script src="../summerJS/sumjs.js"></script>
     <script src="../api/Jquery.js"></script>
 
 
@@ -38,24 +43,38 @@
 <body>
     <header class="p-2 header-style">
             <div class="container-fluid">
-                <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-                    <a href="admin.php" class="nav-link px-2 text-white"><img src="../images/logo.png" alt="logo" style="height: 90px;width: 90px;border-radius: 50%;object-fit: contain"></a>
-                    <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+            <a href="admin.php" class="nav-link px-2 text-white w-25" id="logo1"><img src="../images/logo.png" alt="logo" style="height: 90px;width: 90px;border-radius: 50%;object-fit: contain"></a>
+                <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start head-nav">
+                <a href="admin.php" class="nav-link px-2 text-white" id="logo2"><img src="../images/logo.png" alt="logo" style="height: 90px;width: 90px;border-radius: 50%;object-fit: contain"></a>
+                    <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0" id="nav">
                     <li class="nav-bar mt-2"><a href="admin.php" class="nav-link px-2 text-white">Home</a></li>
                     <li class="nav-bar mt-2"><a href="orders.php" class="nav-link px-2 text-white">Orders</a></li>
                     <li class="nav-bar mt-2"><a href="reports.php" class="nav-link px-2" id="active">Reports</a></li>
                     <li class="nav-bar mt-2"><a href="products.php" class="nav-link px-2 text-white">Products</a></li>
                     <li class="nav-bar mt-2"><a href="categories.php" class="nav-link px-2 text-white">Categories</a></li>
-                    <li class="nav-bar mt-2"><a href="accounts.php" class="nav-link px-2 text-white">Accounts</a></li>
-                    <li class="nav-bar mt-2"><a href="SMS.php" class="nav-link px-2 text-white">Send SMS</a></li>
+                    <li class="nav-bar mt-2"><a href="accounts.php" class="nav-link px-2 text-white">Accounts</a></li>                    
                     </ul>
                     <div class="text-end">
-                    <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-                    <span class="text-white">Welcome, <?php echo $_SESSION['displayName']."! "."(".$_SESSION['roleType']." - ".$_SESSION['roleDes'].")" ?></span>
+                    <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" id="welcome" role="search">
+                    <span class="text-white welcome">Welcome, <?php echo $_SESSION['displayName']."! "."(".$_SESSION['roleType']." - ".$_SESSION['roleDes'].")" ?></span>
                     <a class="btn-log" href="../logout.php">Logout</a>
                     </div>
                     </form>
+                    <label for="menu-toggle" class="menu-icon fs-1">&#9776;</label>
+                    <input type="checkbox" id="menu-toggle">
                 </div>
+                <div class="dropdown_menu">
+                <ul class="dropdown_nav col-12 col-lg-auto me-lg-auto text-center mb-md-0">
+                    <li class="nav-bar"><a href="admin.php" class="nav-link px-2 text-white">Home</a></li>
+                    <li class="nav-bar mt-4"><a href="orders.php" class="nav-link px-2 text-white">Orders</a></li>
+                    <li class="nav-bar mt-4"><a href="reports.php" class="nav-link px-2" id="active">Reports</a></li>
+                    <li class="nav-bar mt-4"><a href="products.php" class="nav-link px-2 text-white">Products</a></li>
+                    <li class="nav-bar mt-4"><a href="categories.php" class="nav-link px-2 text-white">Categories</a></li>
+                    <li class="nav-bar mt-4 mb-4"><a href="accounts.php" class="nav-link px-2 text-white">Accounts</a></li>
+                    <span class="text-white">Welcome, <?php echo $_SESSION['displayName']."! "."(".$_SESSION['roleType']." - ".$_SESSION['roleDes'].")" ?></span>
+                    <a class="btn fs-6 fw-bold text-white" style="background-color: rgb(255, 128, 0);" href="../logout.php">Logout</a>               
+                </ul>
+            </div>
             </div>
     </header>
     <div class="container mt-5 reports-container" style="height: 850px">
@@ -172,7 +191,7 @@
                                 <tr>
                                     <td>#<?php echo $rowmodorder['order_id']; ?></td>
                                     <td><?php echo $rowmodorder['quantity']; ?></td>
-                                    <td><?php echo $rowmodorder['total_amount']; ?></td>
+                                    <td>Php <?php echo $rowmodorder['total_amount']; ?></td>
                                     <td><?php echo $rowmodorder['payment_type']; ?></td>
                                 </tr>
                                 <?php } ?>
@@ -232,20 +251,6 @@
         </div>
     </div>
 
-    <script>
-        function printData()
-        {
-            var divToPrint=document.getElementById("reports");
-            newWin= window.open("");
-            newWin.document.write(divToPrint.outerHTML);
-            newWin.print();
-            newWin.close();
-        }
-
-        $('#btn-print').on('click',function(){
-            printData();
-        })
-    </script>
-
+    <script src="../summerJS/summers.js"></script>
 </body>
 </html>

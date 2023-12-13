@@ -1,0 +1,151 @@
+@font-face {
+  font-family: "sunborn";
+  src: url(../fonts/sunborn/Sunborn-SansOneSlant.otf);
+}
+@font-face {
+  font-family: "gotham";
+  src: url(../fonts/Gotham/GothamExtraLight/GothamExtraLight.otf);
+}.sunborn{
+  font-family: sunborn;
+}.gotham{
+  font-family: gotham;
+}
+
+body {
+    background-color: #fff;
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    }
+  /* HEADER START */
+  .header-style{
+    background-color: rgba(20, 21, 55);
+    font-family: gotham;
+    font-size: 15px;
+    font-weight: bold;
+  }#active{
+    color: orange;
+  }
+  .btn-log{
+    text-decoration: none;
+    padding: 10px;
+    background-color: rgb(255, 128, 0);
+    box-shadow: 5px 6px 6px rgba(20, 21, 55);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 15px;
+    transition: background-color 0.2s ease-in-out;
+  }#checkOut:hover{
+    background-color: green;
+    color: #fff;
+  }.welcome{
+    margin-right: 5px;
+  }
+  .nav-bar{
+    margin-left: 5px;
+  }
+  
+  /* item Lists START */
+  #categoryId{
+    background-color: rgb(255, 128, 0);
+    color: #fff;
+  }
+  #item-list{
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    border: none;
+  }
+   /* order Lists START */
+ #list{
+    margin-left: auto;
+    width: 655px;
+    height: 100%;
+  } #list-list{
+    border: none;
+  }
+
+  /* Check Out START */
+  .orderList{
+    border: 1px solid rgb(223, 223, 226);
+    padding: 10px;
+    width: 100%;
+  }.modal-footer .payType, .placeText{
+    width: 100%;
+    height: 40px;
+    margin-top: 10px;
+    font-size: 17px;
+  }.txtArea{
+    height: 120px;
+  }.totalFoot{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    border: 1px solid rgb(215, 215, 216);
+    margin: 15px;
+    padding: 15px;
+    font-family: sans-serif;
+  }.totalText{
+    text-align: left;
+    font-size: 20px;
+    color: green;
+  }.total{
+    text-align: right;
+    font-size: 20px;
+    color: green;
+  }
+
+  /* Overview CSS & reports */
+  .table-wrap{
+    background-color: #FFF2E4;
+    color: rgba(20, 21, 55);
+    font-family: summerGotlight;
+    border: 5px solid #fff;
+  }.modalMain{
+    font-family: summerGotlight;
+    font-size: 16px;
+  }.reports-container{
+    font-family: summerGotlight;
+    background-color: #FFF2E4;
+    border: 5px solid #fff;
+  }.reportBox1{
+    border-radius: 50%;
+  }
+
+  /* RESPONSIVENESS */
+  #menu-toggle, .menu-icon, .dropdown_menu{
+    display: none;
+}.dropdown_menu{
+    background-color: rgba(20, 21, 55);
+}.dropdown_menu .dropdown_nav{
+    list-style-type: none;
+    text-decoration: none;
+}#logo1{
+    display: none;
+}
+@media (max-width: 1090px) {
+    .menu-icon{
+        display: block;
+        color: aliceblue;
+        margin-left: 50px;
+        position: absolute;
+        right: 0;
+        top: 20px;
+        cursor: pointer;
+    }
+    #nav{
+        position: relative;
+        display: none;
+        float: none;
+        text-align: center;
+        padding: 16px 18px;
+        font-size: 17px;
+    }.btn-log, .welcome, #logo2{
+        display: none;
+    }
+    #logo1{
+    display: block;
+    }#main{
+        width: 5000px;
+    }
+}

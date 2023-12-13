@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ORDERS</title>
-    <link rel="stylesheet" href="mystyle.css">
+    <link rel="stylesheet" href="mystyles.css">
     <link rel="stylesheet" href="../api/datatable.css">
     <script src="../api/datatable.js"></script>
     <style>
@@ -19,26 +19,40 @@
 </head>
 <body>
     <header class="p-2 header-style">
-        <div class="container-fluid">
-            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-                <a href="admin.php" class="nav-link px-2 text-white"><img src="../images/logo.png" alt="logo" style="height: 90px;width: 90px;border-radius: 50%;object-fit: contain"></a>
-                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                <li class="nav-bar mt-2"><a href="admin.php" class="nav-link px-2 text-white">Home</a></li>
-                <li class="nav-bar mt-2"><a href="" class="nav-link px-2" id="active">Orders</a></li>
-                <li class="nav-bar mt-2"><a href="reports.php" class="nav-link px-2 text-white">Reports</a></li>
-                <li class="nav-bar mt-2"><a href="products.php" class="nav-link px-2 text-white">Products</a></li>
-                <li class="nav-bar mt-2"><a href="categories.php" class="nav-link px-2 text-white">Categories</a></li>
-                <li class="nav-bar mt-2"><a href="accounts.php" class="nav-link px-2 text-white">Accounts</a></li>
-                <li class="nav-bar mt-2"><a href="SMS.php" class="nav-link px-2 text-white">Send SMS</a></li>
-                </ul>
-                <div class="text-end">
-                <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-                <span class="text-white">Welcome, <?php echo $_SESSION['displayName']."! "."(".$_SESSION['roleType']." - ".$_SESSION['roleDes'].")" ?></span>
-                <a class="btn-log" href="../logout.php">Logout</a>
+            <div class="container-fluid">
+            <a href="admin.php" class="nav-link px-2 text-white w-25" id="logo1"><img src="../images/logo.png" alt="logo" style="height: 90px;width: 90px;border-radius: 50%;object-fit: contain"></a>
+                <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start head-nav">
+                <a href="admin.php" class="nav-link px-2 text-white" id="logo2"><img src="../images/logo.png" alt="logo" style="height: 90px;width: 90px;border-radius: 50%;object-fit: contain"></a>
+                    <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0" id="nav">
+                    <li class="nav-bar mt-2"><a href="admin.php" class="nav-link px-2 text-white">Home</a></li>
+                    <li class="nav-bar mt-2"><a href="orders.php" class="nav-link px-2" id="active">Orders</a></li>
+                    <li class="nav-bar mt-2"><a href="reports.php" class="nav-link px-2 text-white">Reports</a></li>
+                    <li class="nav-bar mt-2"><a href="products.php" class="nav-link px-2 text-white">Products</a></li>
+                    <li class="nav-bar mt-2"><a href="categories.php" class="nav-link px-2 text-white">Categories</a></li>
+                    <li class="nav-bar mt-2"><a href="accounts.php" class="nav-link px-2 text-white">Accounts</a></li>                    
+                    </ul>
+                    <div class="text-end">
+                    <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" id="welcome" role="search">
+                    <span class="text-white welcome">Welcome, <?php echo $_SESSION['displayName']."! "."(".$_SESSION['roleType']." - ".$_SESSION['roleDes'].")" ?></span>
+                    <a class="btn-log" href="../logout.php">Logout</a>
+                    </div>
+                    </form>
+                    <label for="menu-toggle" class="menu-icon fs-1">&#9776;</label>
+                    <input type="checkbox" id="menu-toggle">
                 </div>
-                </form>
+                <div class="dropdown_menu">
+                <ul class="dropdown_nav col-12 col-lg-auto me-lg-auto text-center mb-md-0">
+                    <li class="nav-bar"><a href="admin.php" class="nav-link px-2 text-white">Home</a></li>
+                    <li class="nav-bar mt-4"><a href="orders.php" class="nav-link px-2" id="active">Orders</a></li>
+                    <li class="nav-bar mt-4"><a href="reports.php" class="nav-link px-2 text-white">Reports</a></li>
+                    <li class="nav-bar mt-4"><a href="products.php" class="nav-link px-2 text-white">Products</a></li>
+                    <li class="nav-bar mt-4"><a href="categories.php" class="nav-link px-2 text-white">Categories</a></li>
+                    <li class="nav-bar mt-4 mb-4"><a href="accounts.php" class="nav-link px-2 text-white">Accounts</a></li>
+                    <span class="text-white">Welcome, <?php echo $_SESSION['displayName']."! "."(".$_SESSION['roleType']." - ".$_SESSION['roleDes'].")" ?></span>
+                    <a class="btn fs-6 fw-bold text-white" style="background-color: rgb(255, 128, 0);" href="../logout.php">Logout</a>               
+                </ul>
             </div>
-        </div>
+            </div>
     </header>
     <div class="container-fluid">
     <div class="row">
@@ -65,7 +79,7 @@
                             <td><form action="orders.php?orderId=<?php echo $rowOrder['order_id']; ?>" method="post">
                                     <select name="status" class="p-1" onchange="this.form.submit()">
                                         <option value=""><?php echo $rowOrder['order_stat']; ?></option>
-                                        <option value="Pending">Pending</option>
+                                        <option value="Unpaid">Unpaid</option>
                                         <option value="Completed">Completed</option>
                                         <option value="Cancelled">Cancelled</option>
                                     </select>
@@ -76,7 +90,11 @@
                                         $status = $_POST['status'];
                                         $sqlStatus = "UPDATE orders SET order_stat = '$status' WHERE order_id = '$orderId'";
                                         $sqlStatus = mysqli_query($conn, $sqlStatus);
-                                        header('location: orders.php');
+                                        echo'
+                                            <script>
+                                                window.location.href="orders.php";
+                                            </script>
+                                        ';
                                     }
                                 ?>
                             </td>
@@ -116,7 +134,7 @@
                                         <h2 class="mx-2">Total amount</h2>
                                         <ul class="list-group list-group-horizontal mx-2">
                                             <li class="list-group-item text-primary text-nowrap w-100 mb-3"><h5>Php <?php echo $rowread['total_amount']; ?>.00</h5></li>
-                                            <li class="list-group-item text-start text-wrap mb-3 w-75">NOTE: <div><?php echo $rowread['notes']; ?></div></li>
+                                            <li class="list-group-item text-start text-wrap mb-3 w-75"><div><?php echo $rowread['notes']; ?></div></li>
                                             <li class="list-group-item text-end text-nowrap text-white mb-3">
                                                 <form action="receipt.php?orderId=<?php echo $rowOrder['order_id']; ?>" method="post" target="_blank">
                                                     <button type="submit" class="btn btn-info text-white">View receipt</button>
@@ -137,5 +155,6 @@
     <script>
         new DataTable('#example');
     </script>
+    <script src="../summerJS/summers.js"></script>
 </body>
 </html>

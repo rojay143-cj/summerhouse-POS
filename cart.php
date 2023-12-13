@@ -37,6 +37,7 @@
     $txtUserId = $_SESSION['userId'];
     if(isset($_POST['placeOrder'])){
         if(!empty($_POST['payType']) && !empty($_POST['txtCus']) && !empty($_POST['txtPayamount'])){
+            $txtrefnum = $_POST['txtrefnum'];
             $payType = $_POST['payType'];
             $txtCus = $_POST['txtCus'];
             $txtmobnumber = $_POST['txtmobnumber'];
@@ -47,8 +48,8 @@
             if($txtPayamount < $grandtotal){
                 $_SESSION['msg'] = "<h5 class='text-danger'>Sorry, Invalid payment amount!</h5>";
             }else{
-                $sqlOrders = "INSERT INTO orders (user_id, total_amount, customer_name, mobile_num, payment_type, amount_tendered, change_amount, notes,order_stat) 
-                VALUES ((SELECT user_id FROM users WHERE user_id = $txtUserId),$grandtotal, '$txtCus', '$txtmobnumber', '$payType', '$txtPayamount',$txtPayamount - $grandtotal, '$txtNote','Processing')";
+                $sqlOrders = "INSERT INTO orders (user_id, total_amount, customer_name, contact_num, payment_type, amount_tendered, change_amount, notes,order_stat, ref_num) 
+                VALUES ((SELECT user_id FROM users WHERE user_id = $txtUserId),$grandtotal, '$txtCus', '$txtmobnumber', '$payType', '$txtPayamount',$txtPayamount - $grandtotal, '$txtNote','Processing', '$txtrefnum')";
                 $sqlOrders = mysqli_query($conn,$sqlOrders);
                 //Insert to Order_details
                 foreach($_SESSION['cart'] as $k => $Q){
@@ -61,7 +62,7 @@
                         $_SESSION['pay'] = $details['amount_tendered'];
                         $_SESSION['total'] = $details['total_amount'];
                         $_SESSION['change'] = $details['change_amount'];
-                        $_SESSION['mobile'] = $details['mobile_num'];
+                        $_SESSION['mobile'] = $details['contact_num'];
                         $_SESSION['date'] = $details['created_at'];
                         $_SESSION['type'] = $details['payment_type'];
                         $_SESSION['discount'] = $details['discount'];
